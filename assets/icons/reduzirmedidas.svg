@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="bios-icon" role="img" aria-label="Reduz medidas">
+  <path d="M23 12h14v6c6 4 8 15 6 25-1 5-1 9 0 12H17c1-3 1-7 0-12 2-10 0-21 6-25Z"/>
+  <path d="M12 33h34v9H12Z"/>
+  <path d="M18 33v5M24 33v7M30 33v5M36 33v7M42 33v5"/>
+  <path d="M46 32h6v11h-6"/>
+</svg>

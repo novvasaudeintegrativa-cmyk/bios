@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Grupo Exclusivo de Fototerapia — Dr. Luís Augusto Conrado</title>
+  <meta name="description" content="Participe gratuitamente do grupo exclusivo de Fototerapia com o Dr. Luis Augusto Conrado e descubra como aplicar a técnica de forma segura e eficaz." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@400;500;600;700&family=Roboto:wght@400;500;700&family=Roboto+Slab:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <style>
+    /* ---- Landing de captura (WhatsApp) ---- */
+    .lp-hero { background: var(--bg); padding: clamp(40px, 7vw, 80px) 0; }
+    .lp-hero__grid { display: grid; gap: clamp(28px, 5vw, 56px); grid-template-columns: 1fr; align-items: center; }
+    @media (min-width: 900px) { .lp-hero__grid { grid-template-columns: 1.1fr .9fr; } }
+    .lp-hero h2 { font-size: clamp(1.9rem, 4vw, 2.8rem); line-height: 1.25; color: var(--green); }
+    .lp-hero p { color: var(--text-dim); }
+
+    .lead-form {
+      background: #001e20; border: 1px solid var(--line);
+      padding: clamp(22px, 3.5vw, 34px); display: grid; gap: 16px;
+      border-radius: 15px;
+    }
+    .lead-form label { display: grid; gap: 6px; font-family: var(--font-head); font-weight: 600; font-size: .95rem; }
+    .lead-form input {
+      width: 100%; padding: 14px 16px; font: inherit; font-family: var(--font-body); font-weight: 400;
+      color: #fff; background: #030806; border: 1px solid rgba(255,255,255,.18); border-radius: 15px;
+    }
+    .lead-form input::placeholder { color: rgba(255,255,255,.4); }
+    .lead-form input:focus { outline: 2px solid var(--green); outline-offset: 0; border-color: var(--green); }
+    .lead-form .btn { justify-content: center; width: 100%; border-radius: 15px; }
+    .lead-form .btn { animation: btn-pulse 1.8s ease-in-out infinite; }
+    .lead-form .btn:hover { animation-play-state: paused; }
+    @keyframes btn-pulse {
+      0%, 100% { transform: scale(1);    box-shadow: 0 0 0 0 rgba(4, 179, 58, .55); }
+      50%      { transform: scale(1.03); box-shadow: 0 0 0 14px rgba(4, 179, 58, 0); }
+    }
+    @media (prefers-reduced-motion: reduce) { .lead-form .btn { animation: none; } }
+    .lead-form__msg { margin: 0; min-height: 1.4em; font-size: .95rem; color: var(--green-neon); text-align: center; }
+    .lead-form__msg.err { color: #ff8a8a; }
+
+    .lp-benefits { background: var(--bg); }
+
+    /* linha verde (30% da largura) entre as seções */
+    main > section { position: relative; }
+    main > section + section::before {
+      content: ""; position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+      width: 209px; height: 1px; background: var(--green);
+    }
+    .site-footer { background: var(--bg); }
+    .lp-split { display: grid; gap: clamp(28px, 5vw, 56px); grid-template-columns: 1fr; align-items: center; }
+    @media (min-width: 900px) { .lp-split { grid-template-columns: .8fr 1.2fr; } .lp-split--rev { grid-template-columns: 1fr 1fr; } }
+    .lp-split img { width: 100%; max-width: 520px; margin-inline: auto; border: 1px solid var(--line); }
+
+    .lp-split--rev img { max-width: none; }  /* foto do aparelho: +30% */
+    .lp-split--photo { align-items: stretch; }
+    .lp-photo {
+      min-height: 420px;
+      background: url("https://cancer.novvasaudeintegrativa.com.br/wp-content/uploads/2025/07/DrConrado-762x1024.png") center bottom / contain no-repeat;
+    }
+
+    @media (min-width: 900px) { .lp-split--conrado { grid-template-columns: 1fr 1fr; } }
+    .lp-photo--conrado {
+      background-position: center top; background-size: 130% auto;
+      min-height: 0; align-self: start; aspect-ratio: 762 / 1331; /* 1024 x 1.3 */
+    }
+    @media (min-width: 900px) { .lp-split--participar { grid-template-columns: 1.25fr .75fr; } }
+    .lp-photo--participar { background-position: center top; min-height: 680px; }
+    .lp-photo--participar {
+      background-image: url("https://cancer.novvasaudeintegrativa.com.br/wp-content/uploads/2025/07/DrAlexAlves-3-1-768x960.png");
+    }
+
+    .checks { list-style: none; margin: 0 0 1.2em; padding: 0; display: grid; gap: 10px; }
+    .checks li { display: flex; gap: 12px; align-items: flex-start; color: var(--text-dim); }
+    .checks li::before { content: "✓"; color: var(--green); font-weight: 700; flex: none; }
+    .checks--title li { color: #fff; font-family: var(--font-head); font-weight: 700; font-size: 1.1rem; margin-top: 10px; }
+    .lp-sub { color: var(--green); font-size: clamp(1.2rem, 2.4vw, 1.5rem); }
+  </style>
+  <!-- Meta Pixel -->
+  <script>
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window, document,'script',
+  'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '1519435041949261');
+  fbq('track', 'PageView');
+  </script>
+  <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1519435041949261&ev=PageView&noscript=1" alt="" /></noscript>
+</head>
+<body>
+
+
+  <main id="top">
+
+    <!-- 1. Chamada + formulário -->
+    <section class="lp-hero">
+      <div class="wrap">
+        <div class="lp-hero__grid">
+          <div>
+            <h2>Participe gratuitamente do nosso grupo exclusivo sobre Fototerapia com o Dr. Luis Augusto Conrado e descubra como aplicar essa técnica de forma segura e eficaz.</h2>
+            <p>É só preencher seus dados para entrar no nosso grupo exclusivo de Fototerapia, onde você terá acesso direto ao Dr. Luis Augusto Conrado e suporte prioritário para tirar suas dúvidas.</p>
+          </div>
+          <form class="lead-form" data-lead-form novalidate>
+            <label>Nome
+              <input type="text" name="name" placeholder="Seu nome completo" autocomplete="name" />
+            </label>
+            <label>Email
+              <input type="email" name="email" placeholder="Coloque o seu melhor e-mail" autocomplete="email" required />
+            </label>
+            <label>Whatsapp
+              <input type="tel" name="whatsapp" placeholder="11999999999" inputmode="numeric" autocomplete="tel-national" />
+            </label>
+            <button class="btn btn--lg" type="submit">ENTRE NO GRUPO AGORA MESMO</button>
+            <p class="lead-form__msg" role="status" aria-live="polite"></p>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. Benefícios -->
+    <section class="section lp-benefits">
+      <div class="wrap">
+        <div class="lp-split lp-split--photo lp-split--conrado">
+          <div class="lp-photo lp-photo--conrado" role="img" aria-label="Dr. Luis Augusto Conrado"></div>
+          <div>
+            <h2 class="h-section left">Descubra os Benefícios da Fototerapia</h2>
+            <p class="lead">Para Profissionais da Saúde e Para Quem Busca Bem-Estar no Dia a Dia. A fototerapia está revolucionando o cuidado com a saúde e o bem-estar, oferecendo resultados surpreendentes tanto em clínicas quanto no conforto de casa. Se você é um profissional da saúde ou alguém em busca de uma solução eficaz para melhorar a qualidade de vida, essa técnica pode ser exatamente o que você procura.</p>
+            <h3 class="lp-sub">Benefícios da Fototerapia para Profissionais da Saúde e Para Você:</h3>
+            <ul class="checks checks--title">
+              <li>Alívio de Dores e Cicatrização Acelerada:</li>
+            </ul>
+            <p>A fototerapia proporciona alívio imediato para dores crônicas e agudas, além de acelerar a recuperação de lesões, sendo eficaz tanto para tratamentos clínicos quanto para uso diário em casa.</p>
+            <ul class="checks checks--title">
+              <li>Tratamento de Condições de Pele:</li>
+            </ul>
+            <p>Ideal para profissionais de dermatologia, a fototerapia ajuda a tratar acne, psoríase, eczema e outros problemas de pele, oferecendo uma alternativa não invasiva e com resultados visíveis em poucas sessões.</p>
+            <ul class="checks checks--title">
+              <li>Redução de Inflamações e Melhora de Doenças Crônicas:</li>
+            </ul>
+            <p>A fototerapia não só reduz inflamações, mas também ajuda no controle de condições crônicas como artrite e tendinites, proporcionando alívio contínuo e eficaz.</p>
+            <ul class="checks checks--title">
+              <li>Solução Não Invasiva e Eficaz para Todos:</li>
+            </ul>
+            <p>A fototerapia é segura, sem efeitos colaterais, e pode ser aplicada tanto em clínicas quanto em casa, permitindo que qualquer pessoa aproveite seus benefícios no seu dia a dia.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. Oportunidade exclusiva -->
+    <section class="section">
+      <div class="wrap">
+        <div class="lp-split lp-split--rev">
+          <div>
+            <h2 class="h-section left">Oportunidade Exclusiva: Acesso ao Dr. Luis Augusto Conrado e Participe do Grupo do WhatsApp!</h2>
+            <p class="lp-sub">Agora você pode aprender tudo sobre fototerapia diretamente com um dos maiores especialistas do Brasil.</p>
+            <p class="lead">Junte-se ao nosso grupo exclusivo de WhatsApp e tenha acesso direto ao Dr. Luis Augusto Conrado, uma das maiores autoridades em fototerapia no Brasil. Ele vai compartilhar com você conhecimentos valiosos sobre como utilizar essa técnica eficaz tanto em clínicas quanto no uso diário em sua casa.</p>
+            <ul class="checks">
+              <li>Como a fototerapia pode ser utilizada no tratamento de várias condições de saúde.</li>
+              <li>Como incorporar a fototerapia em tratamentos clínicos e no cuidado diário em casa.</li>
+              <li>Dicas práticas e seguras para obter os melhores resultados com a fototerapia.</li>
+            </ul>
+          </div>
+          <div>
+            <img src="https://cancer.novvasaudeintegrativa.com.br/wp-content/uploads/2025/07/BiosTherapy-5-768x498.png" alt="Aparelho Bios Therapy" loading="lazy" />
+            <p style="margin-top:20px">A fototerapia é uma técnica poderosa, acessível tanto para profissionais da saúde quanto para qualquer pessoa interessada em melhorar sua qualidade de vida. Não perca a chance de aprender com um dos maiores especialistas do Brasil e transformar sua abordagem de cuidados com a saúde.</p>
+            <p>Venha descobrir como a fototerapia pode transformar sua prática ou sua rotina de cuidados pessoais!</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. Como participar -->
+    <section class="section lp-benefits" id="participar">
+      <div class="wrap">
+        <div class="lp-split lp-split--photo lp-split--participar">
+          <div class="lp-photo lp-photo--participar" role="img" aria-label="Dr. Luis Augusto Conrado segurando um celular"></div>
+          <div>
+            <h2 class="h-section left">Como participar?</h2>
+            <p class="lead">Clique no link para entrar no grupo de WhatsApp e começar a interagir diretamente com o Dr. Luis Augusto Conrado.</p>
+            <h3 class="lp-sub">Garanta sua vaga na live gratuita.</h3>
+            <p>Aproveite essa oportunidade única de expandir seus conhecimentos sobre fototerapia.</p>
+            <p><strong>Entre para o Grupo e Participe da Live:</strong></p>
+            <form class="lead-form" data-lead-form novalidate>
+              <label>Nome
+                <input type="text" name="name" placeholder="Seu nome completo" autocomplete="name" />
+              </label>
+              <label>Email
+                <input type="email" name="email" placeholder="Coloque o seu melhor e-mail" autocomplete="email" required />
+              </label>
+              <label>Whatsapp
+                <input type="tel" name="whatsapp" placeholder="11999999999" inputmode="numeric" autocomplete="tel-national" />
+              </label>
+              <button class="btn btn--lg" type="submit">ENTRE NO GRUPO AGORA MESMO</button>
+              <p class="lead-form__msg" role="status" aria-live="polite"></p>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    ©2026 Bios Therapy | Todos os Direitos Reservados
+  </footer>
+
+  <script>
+    /* Link do grupo de WhatsApp. Vazio = só mostra a mensagem de sucesso (modo teste). */
+    var WHATSAPP_GROUP_URL = "https://chat.whatsapp.com/FTKBk83dtW4LMAmAWXdNhS";
+
+    document.querySelectorAll("[data-lead-form]").forEach(function (form) {
+      var msg = form.querySelector(".lead-form__msg");
+      form.addEventListener("submit", function (e) {
+        e.preventDefault();
+        var email = form.elements.email.value.trim();
+        if (!/^\S+@\S+\.\S+$/.test(email)) {
+          msg.className = "lead-form__msg err";
+          msg.textContent = "Informe um e-mail válido.";
+          form.elements.email.focus();
+          return;
+        }
+        if (typeof fbq === "function") fbq("track", "Lead");
+        msg.className = "lead-form__msg";
+        if (WHATSAPP_GROUP_URL) {
+          msg.textContent = "Tudo certo! Redirecionando para o grupo…";
+          setTimeout(function () { window.location.href = WHATSAPP_GROUP_URL; }, 400); /* dá tempo do Pixel registrar o Lead */
+        } else {
+          msg.textContent = "Cadastro recebido (modo teste: defina WHATSAPP_GROUP_URL).";
+          form.reset();
+        }
+      });
+    });
+  </script>
+</body>
+</html>

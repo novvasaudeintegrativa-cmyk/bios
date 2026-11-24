@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="bios-icon" role="img" aria-label="Possibilita a drenagem">
+  <path d="M32 7c0 0-7 9-7 13a7 7 0 0 0 14 0c0-4-7-13-7-13Z"/>
+  <path d="M12 26h40l-3 24a4 4 0 0 1-4 3H19a4 4 0 0 1-4-3Z"/>
+  <path d="M12 26h40"/>
+  <path d="M23 32v16M31 32v18M39 32v16M47 32v13"/>
+</svg>

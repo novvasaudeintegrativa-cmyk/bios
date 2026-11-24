@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="bios-icon" role="img" aria-label="Controla a flacidez">
+  <path d="M21 10h18c2 9 5 13 5 22 0 12-5 18-7 27h-6l-2-16-2 16h-6c-2-9-7-15-7-27 0-9 3-13 5-22Z"/>
+  <path d="M15 32q-4 5 0 10" stroke-dasharray="2 3"/>
+  <path d="M11 30q-4 6 0 13" stroke-dasharray="2 3"/>
+  <path d="M50 33l3-4 3 4M53 29v13"/>
+</svg>

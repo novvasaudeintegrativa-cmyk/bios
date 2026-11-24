@@ -1,0 +1,3 @@
+# Arquivos locais (mídia, leads, referências) e config do editor: não vão para o repositório
+_arquivos-locais/
+.claude/

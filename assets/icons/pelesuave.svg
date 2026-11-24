@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="bios-icon" role="img" aria-label="Suaviza a pele">
+  <path d="M12 40h40v8a4 4 0 0 1-4 4H16a4 4 0 0 1-4-4Z"/>
+  <path d="M12 46h40"/>
+  <path d="M14 28q18-16 36 0"/>
+  <path d="M44 22l6 3-3 6"/>
+  <path d="M20 22l-6 3 3 6"/>
+</svg>

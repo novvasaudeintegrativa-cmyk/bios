@@ -1,0 +1,883 @@
+<!-- Pagina de vendas Bios Therapy XII - cole no widget HTML do Elementor. Antes: envie as imagens de assets/img para a biblioteca de midia e troque https://SEU-SITE.com.br/wp-content/uploads/bios/ pela URL real (Localizar e Substituir). -->
+<link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@400;500;600;700&family=Roboto:wght@400;500;700&family=Roboto+Slab:wght@400;600&display=swap" rel="stylesheet" />
+<style>
+/* =========================================================================
+   Bios Therapy XII — landing page
+   Remontagem fiel de https://drluisaugustoc.com.br/
+   Paleta e tipografia extraídas do CSS original (Elementor).
+   ========================================================================= */
+
+/* ---- Design tokens ---------------------------------------------------- */
+:root {
+  --green:        #26c484;  /* acento principal / títulos            */
+  --green-neon:   #1fff8c;  /* destaques, preço, hover               */
+  --green-btn:    #04b33a;  /* botões                                */
+  --green-deep:   #265f2a;  /* blocos verdes escuros                 */
+  --green-soft:   #1faa72;
+
+  --bg:           #00292b;  /* fundo principal (teal escuro)         */
+  --bg-deep:      #030806;  /* seções alternadas (quase preto)       */
+  --surface:      #051b11;  /* cards                                 */
+  --surface-2:    #02292b;
+
+  --text:         #ffffff;
+  --text-dim:     rgba(255, 255, 255, .74);
+  --line:         rgba(38, 196, 132, .28);
+
+  --radius:       0;    /* design quadrado — sem arredondamentos */
+  --radius-sm:    0;
+  --maxw:         1180px;
+  --pad:          clamp(20px, 5vw, 40px);
+
+  --font-head: "League Spartan", "Roboto", system-ui, -apple-system, Segoe UI, sans-serif;
+  --font-body: "Roboto", system-ui, -apple-system, Segoe UI, sans-serif;
+}
+
+/* ---- Reset ---------------------------------------------------------------- */
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+.bios-lp {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 17px;
+  line-height: 1.5;            /* técnica de UI: corpo de texto sempre a 150% */
+  overflow-x: hidden;
+}
+img { max-width: 100%; display: block; height: auto; }
+a { color: inherit; }
+h1, h2, h3, h4 { font-family: var(--font-head); font-weight: 700; line-height: 1.12; margin: 0 0 .5em; }
+p { margin: 0 0 1em; }
+strong { color: #fff; font-weight: 700; }
+
+/* ---- Layout helpers ----------------------------------------------------- */
+.section { padding: clamp(48px, 8vw, 96px) 0; position: relative; }
+.section--deep { background: var(--bg-deep); }
+.section--tight { padding-top: clamp(28px, 4vw, 44px); padding-bottom: clamp(28px, 4vw, 44px); }
+.wrap { width: 100%; max-width: var(--maxw); margin-inline: auto; padding-inline: var(--pad); }
+.narrow { max-width: 860px; }
+
+.eyebrow {
+  display: inline-block;
+  font-family: var(--font-head);
+  font-weight: 600;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  font-size: .72rem;
+  color: var(--green);
+  margin-bottom: 14px;
+}
+.h-section {
+  font-size: clamp(1.7rem, 4.2vw, 2.7rem);
+  color: var(--green);
+  text-align: center;
+  margin-bottom: clamp(24px, 4vw, 40px);
+}
+.h-section.left { text-align: left; margin-bottom: 20px; }
+.lead { color: var(--text-dim); font-size: 1.06rem; }
+.center { text-align: center; }
+
+/* ---- Buttons ---------------------------------------------------------- */
+.btn {
+  --btn-bg: var(--green-btn);
+  display: inline-flex; align-items: center; gap: 10px;
+  font-family: var(--font-head); font-weight: 700;
+  font-size: 1.02rem; letter-spacing: .02em;
+  padding: 15px 34px; border-radius: 0;
+  background: var(--btn-bg); color: #04241a;
+  text-decoration: none; border: 0; cursor: pointer;
+  transition: transform .15s ease, background .15s ease;
+}
+.btn:hover { transform: translateY(-2px); background: var(--green-neon); }
+.btn--lg { font-size: 1.15rem; padding: 18px 44px; }
+.btn--wa { --btn-bg: #25d366; color: #06331c; }
+.btn--ghost {
+  background: transparent; color: var(--green);
+  border: 2px solid var(--green); box-shadow: none;
+}
+.btn--ghost:hover { background: var(--green); color: #04241a; }
+
+/* ---- Header --------------------------------------------------------- */
+.site-header {
+  position: sticky; top: 0; z-index: 50;
+  background: rgba(0, 41, 43, .82);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--line);
+}
+.site-header .wrap {
+  display: flex; align-items: center; justify-content: space-between;
+  height: 68px;
+}
+.brand {
+  display: flex; align-items: center; gap: 10px;
+  font-family: var(--font-head); font-weight: 700;
+  font-size: 1.15rem; text-decoration: none; color: #fff;
+}
+.brand svg { width: 30px; height: 30px; color: var(--green); }
+.brand b { color: var(--green); }
+.site-header .btn { padding: 10px 22px; font-size: .92rem; }
+@media (max-width: 640px) { .site-header .btn { display: none; } }
+
+/* ---- Hero (centrado: título -> VSL -> texto, como no original) ---- */
+.hero { padding-top: clamp(40px, 7vw, 80px); background: var(--bg); }
+.hero__inner { max-width: 1000px; margin-inline: auto; text-align: center; }
+.hero h1 {
+  font-size: clamp(1.5rem, 3vw, 2.15rem);
+  line-height: 1.28; letter-spacing: -.005em;
+  max-width: 900px; margin-inline: auto;
+}
+.hero h1 .hl { color: var(--green); }
+.hero .video { max-width: 900px; margin: clamp(26px, 4vw, 40px) auto 0; }
+.hero p {
+  color: var(--text-dim); font-size: 1rem;
+  max-width: 780px; margin: clamp(18px, 3vw, 26px) auto 0;
+}
+
+/* ---- Video placeholder -------------------------------------------- */
+.video {
+  position: relative; overflow: hidden;
+  aspect-ratio: 16 / 9; background: #041a16 center / cover no-repeat;
+  border: 1px solid var(--line);
+  display: grid; place-items: center;
+}
+.video[data-poster] { background-color: #071f1a; }
+.video__play {
+  width: 84px; height: 58px; border: 0; cursor: pointer;
+  background: #ff0000;
+  display: grid; place-items: center;
+  transition: background .15s ease;
+}
+.video__play:hover { background: #cc0000; }
+.video__play::before {
+  content: ""; display: block;
+  border-style: solid; border-width: 11px 0 11px 19px;
+  border-color: transparent transparent transparent #fff;
+  margin-left: 4px;
+}
+
+/* ---- "Conheça" -------------------------------------------------- */
+.split { display: grid; gap: clamp(28px, 5vw, 56px); align-items: center; }
+@media (min-width: 900px) { .split { grid-template-columns: 1fr 1fr; } .split.reverse > :first-child { order: 2; } }
+.split img { border-radius: var(--radius); }
+.figure-frame {
+  border-radius: var(--radius); border: 1px solid var(--line);
+  background: linear-gradient(180deg, rgba(38,196,132,.06), transparent);
+  padding: 14px;
+}
+.figure-frame--green {
+  border: 1px solid var(--green);
+  background: transparent;
+}
+
+/* ---- Grade de benefícios (ícones SVG) — 4 colunas como no original -- */
+.benefits { display: grid; gap: 16px; grid-template-columns: repeat(4, 1fr); }
+@media (max-width: 860px) { .benefits { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 460px) { .benefits { grid-template-columns: 1fr; } }
+.benefit {
+  background: transparent; border: 1px solid rgba(38, 196, 132, .5);
+  border-radius: var(--radius); padding: 28px 20px;
+  text-align: center; transition: transform .15s ease, border-color .15s ease, background .15s ease;
+  display: flex; flex-direction: column; align-items: center;
+}
+.benefit:hover { transform: translateY(-4px); border-color: var(--green); background: rgba(38, 196, 132, .06); }
+.benefit__icon {
+  flex: 0 0 auto; width: 56px; height: 56px; color: var(--green);
+  margin-bottom: 14px; display: grid; place-items: center;
+}
+.benefit__icon svg { width: 56px; height: 56px; display: block; }
+.benefit p { margin: 0; font-size: .96rem; color: var(--text-dim); line-height: 1.5; }
+
+/* ---- Blocos de texto (profissionais / público) ---------------- */
+.textbox--dark {
+  background: #030806; padding: clamp(22px, 3vw, 34px);
+  text-align: center; margin: 4px 0 24px;
+}
+.textbox--dark p { margin: 0 0 1em; color: var(--text-dim); }
+.textbox--dark p:last-child { margin-bottom: 0; }
+
+/* parágrafo de destaque em caixa verde (Para o Público em Geral) */
+.callout--green {
+  background: var(--green); color: #04241a; font-weight: 700;
+  text-align: center; padding: clamp(22px, 3vw, 34px);
+  margin: 4px 0 18px;
+}
+.callout--green + .center { color: var(--text-dim); margin-bottom: 26px; }
+
+.pill-grid { display: grid; gap: 16px; margin-top: 8px; }
+@media (min-width: 760px) { .pill-grid.cols-2 { grid-template-columns: 1fr 1fr; } }
+.pill { padding: 24px 26px; border: 1px solid var(--line); }
+.pill--dark { background: #030806; border: 0; border-left: 3px solid var(--green); }
+.pill--green { background: var(--green); border: 0; color: #04241a; }
+.pill p { margin: 0; font-size: 1rem; }
+.pill--dark p { color: var(--text-dim); }
+.pill--green p { font-weight: 700; }
+.statement {
+  text-align: center; color: #fff;
+  font-size: 1rem; margin-top: 26px;
+}
+
+/* ---- Artigos científicos (tabs) ------------------------------ */
+.tabs { display: grid; gap: 24px; }
+@media (min-width: 900px) { .tabs { grid-template-columns: 260px 1fr; } }
+.tabs__list {
+  display: flex; flex-direction: column; gap: 8px;
+  align-content: start;
+}
+@media (max-width: 899px) { .tabs__list { flex-direction: row; flex-wrap: wrap; } }
+.tabs__btn {
+  font-family: var(--font-head); font-weight: 700;
+  text-align: left; padding: 16px 20px;
+  background: #030806; border: 0; color: #fff;
+  cursor: pointer; transition: background .14s ease, color .14s ease; font-size: 1rem;
+}
+.tabs__btn:hover { color: var(--green); }
+.tabs__btn[aria-selected="true"] { background: var(--green); color: #04241a; }
+.tabs__panel {
+  background: #030806; border: 1px solid rgba(255, 255, 255, .14);
+  padding: clamp(20px, 3vw, 34px);
+}
+.tabs__panel[hidden] { display: none; }
+.tabs__panel ol { margin: 0; padding: 0; list-style: none; counter-reset: art; display: grid; gap: 14px; }
+.tabs__panel li { counter-increment: art; color: #fff; font-size: .95rem; line-height: 1.5; }
+.tabs__panel li::before { content: counter(art) " – "; }
+
+/* ---- Depoimentos ------------------------------------------- */
+.testi-videos {
+  display: grid; gap: 18px; margin-bottom: 28px;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+}
+.testi-shots {
+  display: grid; gap: 16px;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+}
+.testi-shots img {
+  border-radius: var(--radius-sm); border: 1px solid var(--line);
+  background: #fff; width: 100%; height: auto;
+  max-height: 560px; object-fit: contain; object-position: top;
+}
+
+/* ---- Bônus curso ----------------------------------------- */
+.bonus {
+  display: grid; gap: clamp(24px, 4vw, 48px); align-items: center;
+  background: linear-gradient(160deg, #041f16, #010a07);
+  border: 1px solid var(--line); border-radius: var(--radius);
+  padding: clamp(24px, 4vw, 44px);
+}
+@media (min-width: 860px) { .bonus { grid-template-columns: 1fr 1fr; } }
+.price-tag { font-family: var(--font-head); margin-top: 10px; }
+.price-tag .old { color: var(--text-dim); text-decoration: line-through; font-size: 1rem; }
+.price-tag .now { display: block; font-size: clamp(2rem, 6vw, 3.4rem); color: var(--green-neon); font-weight: 700; }
+
+/* ---- Patente / bio ------------------------------------- */
+.note {
+  color: var(--text-dim); font-size: .95rem;
+  border-left: 3px solid var(--green); padding-left: 18px; margin-block: 14px;
+}
+
+/* ---- Bloco de compra --------------------------------- */
+.buy {
+  text-align: center;
+  background:
+    radial-gradient(600px 300px at 50% 0%, rgba(31, 255, 140, .14), transparent 70%),
+    linear-gradient(180deg, #06301f, #02160e);
+  border: 1px solid var(--green); border-radius: var(--radius);
+  padding: clamp(30px, 5vw, 60px);
+}
+.buy h2 { color: #fff; }
+.buy .installments { font-family: var(--font-head); font-size: clamp(2.2rem, 7vw, 3.6rem); font-weight: 700; color: var(--green-neon); margin: 6px 0; }
+.buy .cash { color: var(--text-dim); margin-bottom: 6px; }
+.buy .from { color: var(--text-dim); font-size: .95rem; }
+.buy .btn { margin-top: 22px; }
+
+/* ---- Selo segurança --------------------------------- */
+.trust { display: grid; gap: clamp(24px, 4vw, 48px); align-items: center; }
+@media (min-width: 820px) { .trust { grid-template-columns: 360px 1fr; } }
+.trust__badges { display: flex; flex-direction: column; gap: 16px; align-items: center; }
+.trust__badges img:first-child { width: 260px; max-width: 80%; height: auto; }
+.trust__badges img + img { width: 150px; height: auto; }
+
+/* ---- Caixa de texto com moldura verde (padrão do original) --- */
+.framed {
+  border: 1px solid var(--green); border-radius: var(--radius);
+  padding: clamp(20px, 3vw, 32px);
+}
+.framed p:last-child { margin-bottom: 0; }
+
+/* ---- FAQ ------------------------------------------- */
+.faq { display: grid; gap: 12px; max-width: 820px; margin-inline: auto; }
+.faq__item { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-sm); overflow: hidden; }
+.faq__q {
+  width: 100%; text-align: left; cursor: pointer;
+  font-family: var(--font-head); font-weight: 600; font-size: 1rem; color: #fff;
+  background: transparent; border: 0; padding: 18px 52px 18px 20px;
+  position: relative;
+}
+.faq__q::after {
+  content: "+"; position: absolute; right: 20px; top: 50%; transform: translateY(-50%);
+  font-size: 1.5rem; color: var(--green); line-height: 1; transition: transform .2s ease;
+}
+.faq__item.open .faq__q::after { transform: translateY(-50%) rotate(45deg); }
+.faq__a { max-height: 0; overflow: hidden; transition: max-height .25s ease; }
+.faq__a > div { padding: 0 20px 18px; color: var(--text-dim); font-size: .96rem; }
+
+/* ---- Contato final -------------------------------- */
+.contact { text-align: center; }
+.contact h2 { color: var(--green); }
+
+/* ---- Footer -------------------------------------- */
+.site-footer {
+  background: var(--bg-deep); border-top: 1px solid var(--line);
+  text-align: center; padding: 34px 0; color: var(--text-dim); font-size: .88rem;
+}
+
+/* ---- Botão flutuante WhatsApp -------------------- */
+.wa-float {
+  position: fixed; right: 20px; bottom: 20px; z-index: 60;
+  width: 58px; height: 58px;
+  background: #25d366; display: grid; place-items: center;
+  box-shadow: 0 12px 32px -8px rgba(37, 211, 102, .7);
+  transition: transform .15s ease;
+}
+.wa-float:hover { transform: scale(1.08); }
+.wa-float svg { width: 32px; height: 32px; color: #fff; }
+
+/* ---- Reveal on scroll --------------------------- */
+.reveal { opacity: 0; transform: translateY(24px); transition: opacity .6s ease, transform .6s ease; }
+.reveal.in { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; transition: none; }
+  html { scroll-behavior: auto; }
+}
+
+
+</style>
+<div class="bios-lp">
+
+  <!-- ================= SPRITE DE ÍCONES (design system) =================
+       Também disponível como arquivos soltos em assets/icons/*.svg
+       e como assets/icons/sprite.svg. Use: <svg><use href="#ic-nome"/></svg>
+  ==================================================================== -->
+  <svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
+    <defs>
+      <g id="ic-base"></g>
+    </defs>
+    <symbol id="ic-epiderme" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M32 6c0 0-11 13-11 20a11 11 0 0 0 22 0c0-7-11-20-11-20Z"/>
+      <path d="M11 27h42v21a4 4 0 0 1-4 4H15a4 4 0 0 1-4-4Z"/>
+      <path d="M11 42h42"/>
+    </symbol>
+    <symbol id="ic-ph" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M27 7c0 0-14 17-14 27a14 14 0 0 0 28 0c0-4-2-9-5-13"/>
+      <text x="27" y="41" text-anchor="middle" font-family="'League Spartan',Arial,sans-serif" font-size="15" font-weight="700" fill="currentColor" stroke="none">pH</text>
+      <path d="M47 37c0 0-6 7-6 11a6 6 0 0 0 12 0c0-4-6-11-6-11Z"/>
+    </symbol>
+    <symbol id="ic-drenagem" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M32 7c0 0-7 9-7 13a7 7 0 0 0 14 0c0-4-7-13-7-13Z"/>
+      <path d="M12 26h40l-3 24a4 4 0 0 1-4 3H19a4 4 0 0 1-4-3Z"/>
+      <path d="M12 26h40"/>
+      <path d="M23 32v16M31 32v18M39 32v16M47 32v13"/>
+    </symbol>
+    <symbol id="ic-dor" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M15 44a15 15 0 1 1 26 0"/>
+      <path d="M14 46h28"/>
+      <path d="M20 28l7 3M35 28l-7 3"/>
+      <circle cx="23" cy="36" r="1.6" fill="currentColor" stroke="none"/>
+      <circle cx="33" cy="36" r="1.6" fill="currentColor" stroke="none"/>
+      <path d="M24 42q4 3 8 0"/>
+      <path d="M8 22l6 3-3 4 6 3"/>
+      <path d="M50 20l-6 3 3 4-6 3"/>
+    </symbol>
+    <symbol id="ic-circulacao" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M8 17q8-7 16 0t16 0 16 0"/>
+      <path d="M8 47q8-7 16 0t16 0 16 0"/>
+      <circle cx="20" cy="30" r="4"/><circle cx="33" cy="34" r="5"/><circle cx="45" cy="28" r="3.5"/>
+      <circle cx="26" cy="41" r="3"/><circle cx="41" cy="41" r="3.5"/>
+    </symbol>
+    <symbol id="ic-mitocondria" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M23 19C11 21 8 37 17 45c9 9 31 8 36-5C57 27 45 15 34 19c-4 1-7 1-11 0Z"/>
+      <path d="M18 29q7 5 14 0t13 0"/>
+      <path d="M18 38q7 5 14 0t12 0"/>
+      <circle cx="15" cy="15" r="4"/>
+    </symbol>
+    <symbol id="ic-colageno" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="27" cy="19" r="9"/>
+      <text x="27" y="24" text-anchor="middle" font-family="'League Spartan',Arial,sans-serif" font-size="12" font-weight="700" fill="currentColor" stroke="none">C</text>
+      <path d="M34 13l7-4"/><circle cx="45" cy="8" r="3.2"/>
+      <path d="M8 35q6-4 12 0t12 0 12 0 11 0"/>
+      <g fill="currentColor" stroke="none">
+        <circle cx="12" cy="43" r="1.6"/><circle cx="22" cy="43" r="1.6"/><circle cx="32" cy="43" r="1.6"/><circle cx="42" cy="43" r="1.6"/><circle cx="52" cy="43" r="1.6"/>
+        <circle cx="17" cy="51" r="1.6"/><circle cx="27" cy="51" r="1.6"/><circle cx="37" cy="51" r="1.6"/><circle cx="47" cy="51" r="1.6"/>
+      </g>
+    </symbol>
+    <symbol id="ic-cicatriza" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="27" cy="29" r="17"/>
+      <path d="M17 39 39 19"/>
+      <path d="M19 33l6 6M23 29l6 6M27 25l6 6M31 21l6 6"/>
+      <circle cx="47" cy="45" r="8"/>
+      <path d="M44 42l6 6M50 42l-6 6"/>
+    </symbol>
+    <symbol id="ic-reduzirmedidas" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M23 12h14v6c6 4 8 15 6 25-1 5-1 9 0 12H17c1-3 1-7 0-12 2-10 0-21 6-25Z"/>
+      <path d="M12 33h34v9H12Z"/>
+      <path d="M18 33v5M24 33v7M30 33v5M36 33v7M42 33v5"/>
+      <path d="M46 32h6v11h-6"/>
+    </symbol>
+    <symbol id="ic-flacidez" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M21 10h18c2 9 5 13 5 22 0 12-5 18-7 27h-6l-2-16-2 16h-6c-2-9-7-15-7-27 0-9 3-13 5-22Z"/>
+      <path d="M15 32q-4 5 0 10" stroke-dasharray="2 3"/>
+      <path d="M11 30q-4 6 0 13" stroke-dasharray="2 3"/>
+      <path d="M50 33l3-4 3 4M53 29v13"/>
+    </symbol>
+    <symbol id="ic-linhas" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M18 30c0-13 7-21 14-21s14 8 14 21-6 24-14 24-14-11-14-24Z"/>
+      <path d="M16 27c2-13 9-19 16-19s14 6 16 19c-4-6-10-9-16-9s-12 3-16 9Z"/>
+      <path d="M24 30q3-2 6 0M34 30q3-2 6 0"/>
+      <path d="M27 41q5 3 10 0"/>
+    </symbol>
+    <symbol id="ic-pelesuave" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 40h40v8a4 4 0 0 1-4 4H16a4 4 0 0 1-4-4Z"/>
+      <path d="M12 46h40"/>
+      <path d="M14 28q18-16 36 0"/>
+      <path d="M44 22l6 3-3 6"/>
+      <path d="M20 22l-6 3 3 6"/>
+    </symbol>
+    <symbol id="ic-celulite" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M19 11h22c2 8 4 10 4 18 0 13-6 19-8 24h-7l-2-13-2 13h-7c-2-5-8-11-8-24 0-8 2-10 4-18Z"/>
+      <path d="M9 30h9M14 26l-5 4 5 4"/>
+      <path d="M51 30h-9M46 26l5 4-5 4"/>
+      <g fill="currentColor" stroke="none">
+        <circle cx="24" cy="34" r="1.5"/><circle cx="20" cy="40" r="1.5"/><circle cx="38" cy="34" r="1.5"/><circle cx="42" cy="40" r="1.5"/><circle cx="31" cy="44" r="1.5"/>
+      </g>
+    </symbol>
+    <symbol id="ic-whatsapp" viewBox="0 0 32 32" fill="currentColor">
+      <path d="M16 3C9 3 3.5 8.5 3.5 15.5c0 2.3.6 4.5 1.8 6.4L3 29l7.3-2.2c1.8 1 3.8 1.5 5.7 1.5 7 0 12.5-5.5 12.5-12.5S23 3 16 3zm0 22.7c-1.8 0-3.5-.5-5-1.4l-.4-.2-4.3 1.3 1.3-4.2-.3-.4a10 10 0 0 1-1.6-5.4c0-5.7 4.6-10.3 10.3-10.3S26.3 9.8 26.3 15.5 21.7 25.7 16 25.7zm5.8-7.7c-.3-.2-1.9-.9-2.2-1s-.5-.2-.7.2-.8 1-1 1.2-.4.3-.7.1a8.2 8.2 0 0 1-4-3.5c-.3-.5.3-.5.8-1.6.1-.2 0-.4 0-.6l-1-2.4c-.3-.6-.5-.5-.7-.5h-.6c-.2 0-.6.1-.9.4-1.2 1.3-1.5 2.8-.4 4.9a13.4 13.4 0 0 0 5.6 5c3.3 1.4 3.3 1 3.9.9.6 0 1.9-.8 2.2-1.5.3-.8.3-1.4.2-1.5-.1-.2-.3-.3-.6-.5z"/>
+    </symbol>
+  </svg>
+
+  <!-- ================= HEADER ================= -->
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="#top">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M19.1 4.9L17 7M7 17l-2.1 2.1"/></svg>
+        <span>Dr. <b>Luís Augusto</b></span>
+      </a>
+      <a class="btn" href="#comprar">Quero comprar</a>
+    </div>
+  </header>
+
+  <main id="top">
+
+    <!-- ================= HERO ================= -->
+    <section class="section hero">
+      <div class="wrap hero__inner">
+        <h1 class="reveal">O <span class="hl">Bios Therapy XII</span> é a solução de ponta para quem busca alívio para dores crônicas, aceleração de recuperação de lesões e tratamentos eficientes e seguros.</h1>
+        <div class="reveal video" data-poster="https://SEU-SITE.com.br/wp-content/uploads/bios/vsl-poster.jpg" data-embed="https://www.youtube.com/embed/UoHzy4hWiq8?autoplay=1&rel=0">
+          <button class="video__play" aria-label="Assistir VSL do Bios Therapy XII"></button>
+        </div>
+        <p class="reveal">Desenvolvido com a mais avançada tecnologia de fototerapia de LED/laser, o Bios Therapy é indicado tanto para pessoas que buscam melhorar sua saúde e bem-estar, quanto para profissionais da saúde que desejam oferecer aos seus pacientes uma recuperação mais rápida e eficaz.</p>
+      </div>
+    </section>
+
+    <!-- ================= CONHEÇA ================= -->
+    <section class="section">
+      <div class="wrap split">
+        <div class="reveal figure-frame figure-frame--green">
+          <img src="https://SEU-SITE.com.br/wp-content/uploads/bios/BiosTherapy.png" width="1024" height="664" alt="Aparelho Bios Therapy XII emitindo luz de fototerapia" />
+        </div>
+        <div class="reveal">
+          <h2 class="h-section left">Conheça o Bios Therapy XII</h2>
+          <p>Um equipamento de Fototerapia laser-LED desenvolvido com base em <strong>mais de 30 anos de pesquisa</strong>.</p>
+          <p>Com o principal objetivo de estimular o seu organismo a ter uma autocura.</p>
+          <p>A ação da luz de LED estimula o próprio organismo a sintetizar hormônios, enzimas e mediadores químicos já existentes que, por falta de estímulos, não são sintetizados.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= BENEFÍCIOS (ícones SVG) ================= -->
+    <section class="section">
+      <div class="wrap">
+        <h2 class="h-section reveal">Um Tratamento único que:</h2>
+        <div class="benefits">
+          <div class="benefit reveal"><span class="benefit__icon"><svg><use href="#ic-epiderme"/></svg></span><p>Penetra profundamente na camada da epiderme e derme.</p></div>
+          <div class="benefit reveal"><span class="benefit__icon"><svg><use href="#ic-ph"/></svg></span><p>Controla o pH.</p></div>
+          <div class="benefit reveal"><span class="benefit__icon"><svg><use href="#ic-drenagem"/></svg></span><p>Possibilita a Drenagem.</p></div>
+          <div class="benefit reveal"><span class="benefit__icon"><svg><use href="#ic-dor"/></svg></span><p>Controla Inflamação e Dor.</p></div>
+          <div class="benefit reveal"><span class="benefit__icon"><svg><use href="#ic-circulacao"/></svg></span><p>Melhora a circulação e oxigenação dos tecidos.</p></div>
+          <div class="benefit reveal"><span class="benefit__icon"><svg><use href="#ic-mitocondria"/></svg></span><p>Estimula as mitocôndrias das células a aumentarem o seu metabolismo.</p></div>
+          <div class="benefit reveal"><span class="benefit__icon"><svg><use href="#ic-colageno"/></svg></span><p>Produz colágeno.</p></div>
+          <div class="benefit reveal"><span class="benefit__icon"><svg><use href="#ic-cicatriza"/></svg></span><p>Regenera e cicatriza o tecido em menor tempo.</p></div>
+          <div class="benefit reveal"><span class="benefit__icon"><svg><use href="#ic-reduzirmedidas"/></svg></span><p>Reduz medidas.</p></div>
+          <div class="benefit reveal"><span class="benefit__icon"><svg><use href="#ic-flacidez"/></svg></span><p>Controla a flacidez.</p></div>
+          <div class="benefit reveal"><span class="benefit__icon"><svg><use href="#ic-linhas"/></svg></span><p>Reduz linhas de expressão e rugas.</p></div>
+          <div class="benefit reveal"><span class="benefit__icon"><svg><use href="#ic-pelesuave"/></svg></span><p>Suaviza a pele.</p></div>
+          <div class="benefit reveal"><span class="benefit__icon"><svg><use href="#ic-celulite"/></svg></span><p>Controla a formação de celulite e estrias.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= PROFISSIONAIS ================= -->
+    <section class="section">
+      <div class="wrap">
+        <h2 class="h-section reveal">Para Profissionais de Saúde:</h2>
+        <div class="textbox--dark reveal">
+          <p>Se você é um profissional da saúde, o Bios Therapy é uma tecnologia revolucionária que pode transformar sua prática clínica.</p>
+          <p>Utilizando fototerapia de LED/laser, ele acelera a regeneração celular, reduz inflamações e promove um alívio duradouro de dores em seus pacientes.</p>
+          <p>Ele é ideal para diferentes áreas da saúde, incluindo fisioterapia, medicina esportiva, odontologia, dermatologia e geriatria.</p>
+        </div>
+        <div class="pill-grid cols-2">
+          <div class="pill pill--dark reveal"><p>Acelera o processo de recuperação de seus pacientes, resultando em tratamentos mais rápidos e eficazes.</p></div>
+          <div class="pill pill--dark reveal"><p>Possibilita um aumento no número de atendimentos, já que os pacientes terão recuperação mais rápida e menos necessidade de retornos.</p></div>
+          <div class="pill pill--dark reveal"><p>Oferece uma solução não invasiva e sem efeitos colaterais, melhorando a satisfação dos seus pacientes.</p></div>
+          <div class="pill pill--dark reveal"><p>Diferencia sua clínica ao oferecer uma tecnologia avançada, reconhecida no Brasil e utilizada por equipes médicas e esportivas.</p></div>
+          <div class="pill pill--dark reveal"><p>O Bios Therapy pode ser utilizado em uma ampla gama de tratamentos, incluindo dores crônicas, cicatrização pós-cirúrgica, rejuvenescimento da pele, entre outros.</p></div>
+        </div>
+        <p class="center reveal" style="margin-top:32px">
+          <a class="btn btn--wa" href="https://api.whatsapp.com/send/?phone=5511971975525&text&type=phone_number&app_absent=0" target="_blank" rel="noopener">
+            <svg width="20" height="20"><use href="#ic-whatsapp"/></svg> Falar com um especialista
+          </a>
+        </p>
+      </div>
+    </section>
+
+    <!-- ================= PÚBLICO EM GERAL ================= -->
+    <section class="section">
+      <div class="wrap">
+        <h2 class="h-section reveal">Para o Público em Geral:</h2>
+        <p class="callout--green reveal">Se você sofre com dores crônicas, lesões ou inflamações, o Bios Therapy foi desenvolvido especialmente para promover alívio duradouro e acelerar a recuperação sem o uso de medicamentos.</p>
+        <p class="center reveal">Utilizando a poderosa tecnologia de LED/laser, ele estimula a regeneração celular e reduz inflamações, proporcionando alívio rápido e eficaz de forma natural.</p>
+        <div class="pill-grid cols-2">
+          <div class="pill pill--green reveal"><p>Alívio das dores crônicas e articulares, promovendo maior liberdade de movimento.</p></div>
+          <div class="pill pill--green reveal"><p>Aceleração da recuperação de cirurgias e lesões.</p></div>
+          <div class="pill pill--green reveal"><p>Redução de inflamações e alívio das dores musculares e articulares.</p></div>
+          <div class="pill pill--green reveal"><p>Melhora na circulação sanguínea e oxigenação dos tecidos.</p></div>
+          <div class="pill pill--green reveal"><p>Tratamento da flacidez da pele e rejuvenescimento facial.</p></div>
+          <div class="pill pill--green reveal"><p>Efeito comprovado no combate às enxaquecas e dores de cabeça.</p></div>
+        </div>
+        <p class="statement reveal">O Bios Therapy é totalmente seguro e pode ser utilizado por qualquer pessoa, em qualquer idade, sem efeitos colaterais.</p>
+      </div>
+    </section>
+
+    <!-- ================= ARTIGOS CIENTÍFICOS ================= -->
+    <section class="section">
+      <div class="wrap">
+        <h2 class="h-section reveal">Artigos Científicos</h2>
+        <div class="tabs reveal">
+          <div class="tabs__list" role="tablist" aria-label="Categorias de artigos" data-tabs>
+            <button class="tabs__btn" role="tab" data-tab="epitelial">Reparação Epitelial</button>
+            <button class="tabs__btn" role="tab" data-tab="prp">PRP</button>
+            <button class="tabs__btn" role="tab" data-tab="pdt">Terapia Fotodinâmica</button>
+            <button class="tabs__btn" role="tab" data-tab="inflamacao">Inflamação</button>
+            <button class="tabs__btn" role="tab" data-tab="laserled">Laser / Led</button>
+            <button class="tabs__btn" role="tab" data-tab="ossea">Reparação Óssea</button>
+            <button class="tabs__btn" role="tab" data-tab="outros">Outros</button>
+          </div>
+
+          <div class="tabs__panel" role="tabpanel" data-tabpanel="epitelial">
+            <ol>
+              <li>NASA light-emitting diodes for the prevention of oral mucositis in pediatric bone marrow transplant patients.</li>
+              <li>O uso da fototerapia no controle do edema no pós-operatório de cirurgias estéticas.</li>
+              <li>Application of phototherapy for the healing of the navels of neonatal dairy calves.</li>
+              <li>Ledterapia no controle da inflamação.</li>
+              <li>Estudo para tratamento de úlcera por pressão através da Fototerapia com Led.</li>
+              <li>Avaliação dos efeitos do laser de baixa potência em úlceras utilizando a fotogrametria e índice de retração.</li>
+              <li>Effect of photodynamic therapy on the healing of cutaneous third-degree burn.</li>
+              <li>Effect of NASA Light-emitting Diode Irradiation on wound healing.</li>
+              <li>Avaliação dos efeitos do LED na cicatrização de feridas cutâneas em ratos wistar.</li>
+              <li>Light-emitting Diode phototherapy at 630 ± 3 nm increases local levels of skin-homing T-cells in human subjects.</li>
+              <li>The use of hyperbaric oxygen and LEDtherapy in diabetic foot.</li>
+              <li>Ledterapia no controle da inflamação.</li>
+            </ol>
+          </div>
+
+          <div class="tabs__panel" role="tabpanel" data-tabpanel="prp" hidden>
+            <ol>
+              <li>Métodos e Aplicações do Plasma Rico em Plaquetas: Uma Revisão.</li>
+              <li>Contributions to classification of platelet rich plasma — proposal of a new classification: MARSPILL.</li>
+              <li>Platelet Rich Plasma Treatment of Androgenetic Alopecia in Men and Women.</li>
+              <li>To evaluate the effect of combining photo-activation therapy with platelet-rich plasma injections for the novel treatment of osteoarthritis.</li>
+              <li>Avaliação do efeito do plasma rico em plaquetas fotoestimulado pelo laser de baixa potência no processo de regeneração óssea.</li>
+              <li>Inflammatory Interaction Between LIGHT and Proteinase-Activated Receptor-2 in Endothelial Cells.</li>
+              <li>Revisão Sistemática da Literatura sobre a efetividade clínica do Plasma Rico em Plaquetas para o Tratamento Dermatológico Estético.</li>
+              <li>Stem cell Therapy for idiopathic pulmonary fibrosis: a protocol proposal.</li>
+            </ol>
+          </div>
+
+          <div class="tabs__panel" role="tabpanel" data-tabpanel="pdt" hidden>
+            <ol>
+              <li>Regeneration of human bones in hip osteonecrosis and human cartilage in knee osteoarthritis with autologous adipose-tissue-derived stem cells: a case series.</li>
+              <li>NASA Light-emitting diodes for the prevention of oral mucositis in pediatric bone marrow transplant patients.</li>
+              <li>Antimicrobial photodynamic therapy combined with conventional endodontic treatment to eliminate root canal biofilm infection.</li>
+              <li>Aplicação da Terapia Fotodinâmica e Laserterapia em Implantodontia.</li>
+              <li>Comparative study among three different phototherapy protocols to treat chemotherapy-induced oral mucositis in hamsters.</li>
+              <li>O uso da Ledterapia na mucosite oral: avanços na prevenção e tratamento.</li>
+              <li>Photobiomodulation and cancer: what is the truth?</li>
+              <li>Terapia LED de baixa intensidade no tratamento da dor durante o movimento ortodôntico.</li>
+              <li>Photodiagnosis and photodynamic therapy — review: PDT experience in Brazil, a regional profile.</li>
+              <li>Antimicrobial comparison of effectiveness of endodontic therapy and endodontic therapy combined with photo-desinfection on patients with periapical lesion. A 6-month follow up.</li>
+              <li>PDT — Photochemical &amp; Photobiological Sciences.</li>
+              <li>Aplicação de terapia fotodinâmica e laserterapia em implantodontia.</li>
+              <li>Antimicrobial comparison of effectiveness of endodontic therapy and endodontic therapy combined with photo-desinfection on patients with periapical lesion. A 6-month follow up.</li>
+              <li>Antimicrobial effects of photodynamic therapy on patients with necrotic pulps and periapical lesion.</li>
+            </ol>
+          </div>
+
+          <div class="tabs__panel" role="tabpanel" data-tabpanel="inflamacao" hidden>
+            <ol>
+              <li>A Fototerapia como uma Alternativa para Alopécia Areata.</li>
+              <li>Azul de Metileno e Ativação Mitocondrial.</li>
+              <li>Efeitos do Diodo Emissor de Luz (LED) Vermelho na Estimulação de Fibroblastos: ênfase na Reparação Tecidual.</li>
+            </ol>
+          </div>
+
+          <div class="tabs__panel" role="tabpanel" data-tabpanel="laserled" hidden>
+            <ol>
+              <li>Laser and led photobiology.</li>
+              <li>LED and laser photobiomodulation in the prevention and treatment of oral mucositis: experimental study in hamsters.</li>
+              <li>O Uso da Fototerapia no Controle do Edema no Pós-Operatório de Cirurgias Estéticas.</li>
+            </ol>
+          </div>
+
+          <div class="tabs__panel" role="tabpanel" data-tabpanel="ossea" hidden>
+            <ol>
+              <li>Terapia LED de baixa intensidade no tratamento da dor durante movimento ortodôntico — Estudo Clínico.</li>
+            </ol>
+          </div>
+
+          <div class="tabs__panel" role="tabpanel" data-tabpanel="outros" hidden>
+            <ol>
+              <li>Mitochondrial respiration as a target for neuroprotection and cognitive enhancement.</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= DEPOIMENTOS ================= -->
+    <section class="section">
+      <div class="wrap">
+        <h2 class="h-section reveal">Depoimentosss</h2>
+        <div class="testi-videos reveal">
+          <div class="video" data-embed=""><button class="video__play" aria-label="Assistir depoimento 1"></button></div>
+          <div class="video" data-embed=""><button class="video__play" aria-label="Assistir depoimento 2"></button></div>
+          <div class="video" data-embed=""><button class="video__play" aria-label="Assistir depoimento 3"></button></div>
+        </div>
+        <div class="testi-shots reveal">
+          <img src="https://SEU-SITE.com.br/wp-content/uploads/bios/Dep01.png" width="473" height="1024" alt="Depoimento de cliente via WhatsApp — resultados com o Bios Therapy" loading="lazy" />
+          <img src="https://SEU-SITE.com.br/wp-content/uploads/bios/Dep02.png" width="473" height="1024" alt="Depoimento de cliente via WhatsApp — facilidade de uso" loading="lazy" />
+          <img src="https://SEU-SITE.com.br/wp-content/uploads/bios/Dep03.png" width="473" height="1024" alt="Depoimento de cliente via WhatsApp — recuperação acelerada" loading="lazy" />
+          <img src="https://SEU-SITE.com.br/wp-content/uploads/bios/Dep04.png" width="473" height="1024" alt="Depoimento de cliente via WhatsApp — satisfação dos pacientes" loading="lazy" />
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= BÔNUS CURSO ================= -->
+    <section class="section">
+      <div class="wrap">
+        <div class="bonus reveal">
+          <div>
+            <h2 class="h-section left">BÔNUS EXCLUSIVO: Curso Online de Fototerapia Clínica e Estética</h2>
+            <p>Ao adquirir o Bios Therapy, você garante <strong>1 ano de acesso completo</strong> ao nosso Curso de Fototerapia Clínica e Estética, onde aprenderá a aplicar a fototerapia de forma segura, eficiente e lucrativa nos seus atendimentos.</p>
+            <p>Isso mesmo: você recebe este curso <strong>100% gratuito</strong> na compra do seu Bios Therapy, elevando seus atendimentos ao próximo nível sem pagar nada a mais por isso.</p>
+            <p>Garanta o seu bônus enquanto está disponível e avance na sua jornada profissional com a fototerapia!</p>
+            <p class="price-tag"><span class="old">De R$ 1.997,00 por</span><span class="now">R$ 0,00</span></p>
+          </div>
+          <div class="figure-frame">
+            <img src="https://SEU-SITE.com.br/wp-content/uploads/bios/curso.webp" width="464" height="337" alt="Curso Online de Fototerapia Clínica e Estética" loading="lazy" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= PATENTE ================= -->
+    <section class="section">
+      <div class="wrap split">
+        <div class="reveal figure-frame">
+          <img src="https://SEU-SITE.com.br/wp-content/uploads/bios/Patente.png" width="1024" height="895" alt="Certificado de patente do equipamento de fototerapia — Dr. Conrado, 2021" loading="lazy" />
+        </div>
+        <div class="reveal">
+          <h2 class="h-section left">Certificado de Patente</h2>
+          <div class="framed">
+            <p>Em 2021 Dr. Conrado conquistou sua patente como inventor de equipamentos e sistemas de Fototerapia e/ou Clareamento dental e uso dos mesmos.</p>
+            <p>A presente invenção refere-se a um sistema para bioestimulação celular, que utiliza pelo menos uma substância contendo pigmentos na cor verde ou azul, a qual forma um filtro apto a receber uma luz vermelha, advinda de um equipamento contendo uma fonte de luz do tipo LED (light emitting diode) de cor vermelha.</p>
+            <p>A referida fonte de luz é obtida através de um equipamento emissor de luz contendo um grupo de LEDs vermelhos, os quais possuem o comprimento de onda de 630nm podendo compreender também na faixa de 600nm a 780nm, com potência podendo variar entre 1 a 999 mW. O sistema e equipamento de acordo com a presente invenção são eficazes no clareamento dentário ou no tratamento de diversas afecções do corpo humano ou animal.</p>
+            <p>O equipamento apresenta baixo custo, agregando requisitos de economia, segurança e conforto, reafirmando sua praticidade utilitária, dando aos usuários pacientes, inúmeras possibilidades e benefícios, tornando-se de grande expectativa para o seguimento.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= BIO DR. CONRADO ================= -->
+    <section class="section section--tight">
+      <div class="wrap narrow center reveal">
+        <p class="lead">O Bios Therapy foi desenvolvido pelo <strong>Dr. Luís Augusto Conrado</strong>, um dos maiores especialistas em engenharia biomédica, com mais de 30 anos de experiência em biotecnologia. Seu trabalho foi fundamental para a criação desse equipamento de alta tecnologia, validado por décadas de pesquisa científica.</p>
+      </div>
+    </section>
+
+    <!-- ================= COMPRA ================= -->
+    <section class="section" id="comprar">
+      <div class="wrap">
+        <div class="buy reveal">
+          <p class="lead" style="margin-bottom:8px">A tecnologia está disponível para você adquirir agora e transformar sua saúde ou a prática de sua clínica, com resultados visíveis em poucos dias. Não perca a oportunidade de vivenciar os benefícios do Bios Therapy!</p>
+          <h2 class="h-section">COMPRE AGORA E TRANSFORME SUA SAÚDE OU PRÁTICA CLÍNICA:</h2>
+          <p class="lead">Clique no botão abaixo para encomendar o seu Bios Therapy.</p>
+          <p class="from">De R$ 5.000,00 por apenas</p>
+          <p class="installments">12x de R$ 541,17</p>
+          <p class="cash">ou <strong>R$ 4.797,50</strong> à vista no PIX</p>
+          <a class="btn btn--lg" href="https://bios-fototerapia.pay.yampi.com.br/r/IZKE2UZZ4H" target="_blank" rel="noopener">QUERO COMPRAR</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= SELO DE SEGURANÇA ================= -->
+    <section class="section">
+      <div class="wrap trust reveal">
+        <div class="trust__badges">
+          <img src="https://SEU-SITE.com.br/wp-content/uploads/bios/Cadeado.webp" width="345" height="345" alt="Selo de segurança — escudo de proteção" loading="lazy" />
+          <img src="https://SEU-SITE.com.br/wp-content/uploads/bios/selo100.png" width="120" height="76" alt="Selo 100% Secure" loading="lazy" />
+        </div>
+        <div>
+          <h2 class="h-section left">Como sei que estou comprando um produto original e seguro?</h2>
+          <div class="framed">
+            <p>Em 2021, o Dr. Conrado conquistou sua patente como inventor de equipamentos e sistemas de Fototerapia e/ou Clareamento dental e uso dos mesmos.</p>
+            <p>A presente invenção refere-se a um sistema para bioestimulação celular, que utiliza pelo menos uma substância contendo pigmentos na cor verde ou azul, a qual forma um filtro apto a receber uma luz vermelha, advinda de um equipamento contendo uma fonte de luz do tipo LED (light emitting diode) de cor vermelha.</p>
+            <p>A referida fonte de luz é obtida através de um equipamento emissor de luz contendo um grupo de LEDs vermelhos, os quais possuem o comprimento de onda de 630nm podendo compreender também na faixa de 600nm a 780nm, com potência podendo variar entre 1 a 999 mW. O sistema e equipamento de acordo com a presente invenção são eficazes no clareamento dentário ou no tratamento de diversas afecções do corpo humano ou animal.</p>
+            <p>O equipamento apresenta baixo custo, agregando requisitos de economia, segurança e conforto, reafirmando sua praticidade utilitária, dando aos usuários pacientes, inúmeras possibilidades e benefícios, tornando-se de grande expectativa para o seguimento.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= FAQ ================= -->
+    <section class="section">
+      <div class="wrap">
+        <h2 class="h-section reveal">Perguntas Frequentes</h2>
+        <div class="faq reveal">
+          <div class="faq__item"><button class="faq__q" aria-expanded="false">Quais são as formas de pagamento?</button><div class="faq__a"><div>Cartão de Crédito, Boleto ou Pix.</div></div></div>
+          <div class="faq__item"><button class="faq__q" aria-expanded="false">O que vem na caixa junto com o aparelho?</button><div class="faq__a"><div>Vão dois óculos de proteção na caixa e o manual é enviado via WhatsApp.</div></div></div>
+          <div class="faq__item"><button class="faq__q" aria-expanded="false">O aparelho é indicado para uso profissional ou pessoal?</button><div class="faq__a"><div>Para ambos.</div></div></div>
+          <div class="faq__item"><button class="faq__q" aria-expanded="false">Preciso ter curso ou formação para usar o aparelho?</button><div class="faq__a"><div>Não.</div></div></div>
+          <div class="faq__item"><button class="faq__q" aria-expanded="false">O equipamento tem garantia? Por quanto tempo?</button><div class="faq__a"><div>Garantia de 3 meses.</div></div></div>
+          <div class="faq__item"><button class="faq__q" aria-expanded="false">Vocês oferecem assistência técnica?</button><div class="faq__a"><div>Assistência técnica permanente e suporte via WhatsApp.</div></div></div>
+          <div class="faq__item"><button class="faq__q" aria-expanded="false">O envio é para todo o Brasil? Qual o prazo de entrega?</button><div class="faq__a"><div>Pronta entrega para o Brasil todo. O prazo varia de acordo com os Correios.</div></div></div>
+          <div class="faq__item"><button class="faq__q" aria-expanded="false">Como sei que estou comprando um produto original e seguro?</button><div class="faq__a"><div>Em 2021, o Dr. Conrado conquistou sua patente como inventor de equipamentos e sistemas de Fototerapia e/ou Clareamento dental e uso dos mesmos. Todo aparelho é fabricado sob essa patente.</div></div></div>
+          <div class="faq__item"><button class="faq__q" aria-expanded="false">Esse aparelho substitui tratamentos médicos?</button><div class="faq__a"><div>Não.</div></div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= CONTATO ================= -->
+    <section class="section contact">
+      <div class="wrap narrow reveal">
+        <h2>Ficou com alguma dúvida?</h2>
+        <p class="lead">Entre em contato com o nosso time!</p>
+        <a class="btn btn--wa btn--lg" href="https://wa.me/5511971975525" target="_blank" rel="noopener">
+          <svg width="22" height="22"><use href="#ic-whatsapp"/></svg> Entrar em contato
+        </a>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    Bios Fototerapia | Todos os direitos reservados® 2025
+  </footer>
+
+  <a class="wa-float" href="https://wa.me/5511971975525" target="_blank" rel="noopener" aria-label="Falar no WhatsApp">
+    <svg><use href="#ic-whatsapp"/></svg>
+  </a>
+
+  <script>
+/* Bios Therapy XII — interações da landing page
+   - Tabs de artigos científicos
+   - Acordeão de FAQ
+   - Reveal on scroll
+   - Placeholders de vídeo (troque o data-embed pelo <iframe> real)
+*/
+(function () {
+  "use strict";
+
+  /* ---------- Tabs: Artigos Científicos ---------- */
+  var tablist = document.querySelector("[data-tabs]");
+  if (tablist) {
+    var btns = Array.prototype.slice.call(tablist.querySelectorAll(".tabs__btn"));
+    var panels = Array.prototype.slice.call(
+      document.querySelectorAll("[data-tabpanel]")
+    );
+    function select(id) {
+      btns.forEach(function (b) {
+        b.setAttribute("aria-selected", String(b.dataset.tab === id));
+      });
+      panels.forEach(function (p) {
+        p.hidden = p.dataset.tabpanel !== id;
+      });
+    }
+    btns.forEach(function (b) {
+      b.addEventListener("click", function () {
+        select(b.dataset.tab);
+      });
+    });
+    select(btns[0].dataset.tab);
+  }
+
+  /* ---------- FAQ acordeão ---------- */
+  document.querySelectorAll(".faq__item").forEach(function (item) {
+    var q = item.querySelector(".faq__q");
+    var a = item.querySelector(".faq__a");
+    q.addEventListener("click", function () {
+      var open = item.classList.toggle("open");
+      q.setAttribute("aria-expanded", String(open));
+      a.style.maxHeight = open ? a.scrollHeight + "px" : "0px";
+    });
+  });
+
+  /* ---------- Vídeo: placeholder -> embed real ---------- */
+  document.querySelectorAll(".video").forEach(function (v) {
+    var poster = v.getAttribute("data-poster");
+    if (poster) {
+      v.style.backgroundImage = "url('" + poster + "')";
+      v.style.backgroundSize = "cover";
+      v.style.backgroundPosition = "center";
+    }
+    var btn = v.querySelector(".video__play");
+    if (!btn) return;
+    if (!v.getAttribute("data-embed")) {
+      btn.disabled = true;
+      btn.setAttribute("aria-disabled", "true");
+      return;
+    }
+    btn.addEventListener("click", function () {
+      var embed = v.getAttribute("data-embed");
+      var f = document.createElement("iframe");
+      f.src = embed;
+      f.title = "Vídeo Bios Therapy";
+      f.loading = "lazy";
+      f.allow =
+        "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture";
+      f.allowFullscreen = true;
+      f.style.cssText = "position:absolute;inset:0;width:100%;height:100%;border:0";
+      v.innerHTML = "";
+      v.appendChild(f);
+    });
+  });
+
+  /* ---------- Reveal on scroll ---------- */
+  var io = new IntersectionObserver(
+    function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) {
+          e.target.classList.add("in");
+          io.unobserve(e.target);
+        }
+      });
+    },
+    { threshold: 0.12 }
+  );
+  document.querySelectorAll(".reveal").forEach(function (el) {
+    io.observe(el);
+  });
+
+})();
+
+</script>
+</div>

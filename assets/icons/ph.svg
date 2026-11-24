@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="bios-icon" role="img" aria-label="Controla o pH">
+  <path d="M27 7c0 0-14 17-14 27a14 14 0 0 0 28 0c0-4-2-9-5-13"/>
+  <text x="27" y="41" text-anchor="middle" font-family="'League Spartan',Arial,sans-serif" font-size="15" font-weight="700" fill="currentColor" stroke="none">pH</text>
+  <path d="M47 37c0 0-6 7-6 11a6 6 0 0 0 12 0c0-4-6-11-6-11Z"/>
+</svg>

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Design System — Bios Therapy XII</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@400;500;600;700&family=Roboto:wght@400;500;700&family=Roboto+Slab:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/design-system.css" />
+</head>
+<body>
+
+  <!-- ===== Sprite de ícones (fonte única: assets/icons/sprite.svg) ===== -->
+  <svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
+    <symbol id="ic-epiderme" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M32 6c0 0-11 13-11 20a11 11 0 0 0 22 0c0-7-11-20-11-20Z"/><path d="M11 27h42v21a4 4 0 0 1-4 4H15a4 4 0 0 1-4-4Z"/><path d="M11 42h42"/></symbol>
+    <symbol id="ic-ph" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M27 7c0 0-14 17-14 27a14 14 0 0 0 28 0c0-4-2-9-5-13"/><text x="27" y="41" text-anchor="middle" font-family="'League Spartan',Arial,sans-serif" font-size="15" font-weight="700" fill="currentColor" stroke="none">pH</text><path d="M47 37c0 0-6 7-6 11a6 6 0 0 0 12 0c0-4-6-11-6-11Z"/></symbol>
+    <symbol id="ic-drenagem" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M32 7c0 0-7 9-7 13a7 7 0 0 0 14 0c0-4-7-13-7-13Z"/><path d="M12 26h40l-3 24a4 4 0 0 1-4 3H19a4 4 0 0 1-4-3Z"/><path d="M12 26h40"/><path d="M23 32v16M31 32v18M39 32v16M47 32v13"/></symbol>
+    <symbol id="ic-dor" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M15 44a15 15 0 1 1 26 0"/><path d="M14 46h28"/><path d="M20 28l7 3M35 28l-7 3"/><circle cx="23" cy="36" r="1.6" fill="currentColor" stroke="none"/><circle cx="33" cy="36" r="1.6" fill="currentColor" stroke="none"/><path d="M24 42q4 3 8 0"/><path d="M8 22l6 3-3 4 6 3"/><path d="M50 20l-6 3 3 4-6 3"/></symbol>
+    <symbol id="ic-circulacao" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M8 17q8-7 16 0t16 0 16 0"/><path d="M8 47q8-7 16 0t16 0 16 0"/><circle cx="20" cy="30" r="4"/><circle cx="33" cy="34" r="5"/><circle cx="45" cy="28" r="3.5"/><circle cx="26" cy="41" r="3"/><circle cx="41" cy="41" r="3.5"/></symbol>
+    <symbol id="ic-mitocondria" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19C11 21 8 37 17 45c9 9 31 8 36-5C57 27 45 15 34 19c-4 1-7 1-11 0Z"/><path d="M18 29q7 5 14 0t13 0"/><path d="M18 38q7 5 14 0t12 0"/><circle cx="15" cy="15" r="4"/></symbol>
+    <symbol id="ic-colageno" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><circle cx="27" cy="19" r="9"/><text x="27" y="24" text-anchor="middle" font-family="'League Spartan',Arial,sans-serif" font-size="12" font-weight="700" fill="currentColor" stroke="none">C</text><path d="M34 13l7-4"/><circle cx="45" cy="8" r="3.2"/><path d="M8 35q6-4 12 0t12 0 12 0 11 0"/><g fill="currentColor" stroke="none"><circle cx="12" cy="43" r="1.6"/><circle cx="22" cy="43" r="1.6"/><circle cx="32" cy="43" r="1.6"/><circle cx="42" cy="43" r="1.6"/><circle cx="52" cy="43" r="1.6"/><circle cx="17" cy="51" r="1.6"/><circle cx="27" cy="51" r="1.6"/><circle cx="37" cy="51" r="1.6"/><circle cx="47" cy="51" r="1.6"/></g></symbol>
+    <symbol id="ic-cicatriza" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><circle cx="27" cy="29" r="17"/><path d="M17 39 39 19"/><path d="M19 33l6 6M23 29l6 6M27 25l6 6M31 21l6 6"/><circle cx="47" cy="45" r="8"/><path d="M44 42l6 6M50 42l-6 6"/></symbol>
+    <symbol id="ic-reduzirmedidas" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M23 12h14v6c6 4 8 15 6 25-1 5-1 9 0 12H17c1-3 1-7 0-12 2-10 0-21 6-25Z"/><path d="M12 33h34v9H12Z"/><path d="M18 33v5M24 33v7M30 33v5M36 33v7M42 33v5"/><path d="M46 32h6v11h-6"/></symbol>
+    <symbol id="ic-flacidez" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10h18c2 9 5 13 5 22 0 12-5 18-7 27h-6l-2-16-2 16h-6c-2-9-7-15-7-27 0-9 3-13 5-22Z"/><path d="M15 32q-4 5 0 10" stroke-dasharray="2 3"/><path d="M11 30q-4 6 0 13" stroke-dasharray="2 3"/><path d="M50 33l3-4 3 4M53 29v13"/></symbol>
+    <symbol id="ic-linhas" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M18 30c0-13 7-21 14-21s14 8 14 21-6 24-14 24-14-11-14-24Z"/><path d="M16 27c2-13 9-19 16-19s14 6 16 19c-4-6-10-9-16-9s-12 3-16 9Z"/><path d="M24 30q3-2 6 0M34 30q3-2 6 0"/><path d="M27 41q5 3 10 0"/></symbol>
+    <symbol id="ic-pelesuave" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 40h40v8a4 4 0 0 1-4 4H16a4 4 0 0 1-4-4Z"/><path d="M12 46h40"/><path d="M14 28q18-16 36 0"/><path d="M44 22l6 3-3 6"/><path d="M20 22l-6 3 3 6"/></symbol>
+    <symbol id="ic-celulite" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M19 11h22c2 8 4 10 4 18 0 13-6 19-8 24h-7l-2-13-2 13h-7c-2-5-8-11-8-24 0-8 2-10 4-18Z"/><path d="M9 30h9M14 26l-5 4 5 4"/><path d="M51 30h-9M46 26l5 4-5 4"/><g fill="currentColor" stroke="none"><circle cx="24" cy="34" r="1.5"/><circle cx="20" cy="40" r="1.5"/><circle cx="38" cy="34" r="1.5"/><circle cx="42" cy="40" r="1.5"/><circle cx="31" cy="44" r="1.5"/></g></symbol>
+  </svg>
+
+  <div class="ds-wrap">
+    <h1>Design System</h1>
+    <p>Fundamentos visuais do <strong>Bios Therapy XII</strong>, extraídos da página <a href="index.html">index.html</a> e do site original. Ponto de partida para padronizar novas páginas e materiais.</p>
+
+    <h2>Cores</h2>
+    <p>Tokens CSS em <code>:root</code> (arquivo <code>css/styles.css</code>).</p>
+    <div class="swatches">
+      <div class="swatch"><div class="chip" style="background:#26c484"></div><div class="meta"><b>--green</b><span>#26c484 · acento / títulos</span></div></div>
+      <div class="swatch"><div class="chip" style="background:#1fff8c"></div><div class="meta"><b>--green-neon</b><span>#1fff8c · destaque / preço</span></div></div>
+      <div class="swatch"><div class="chip" style="background:#04b33a"></div><div class="meta"><b>--green-btn</b><span>#04b33a · botões</span></div></div>
+      <div class="swatch"><div class="chip" style="background:#265f2a"></div><div class="meta"><b>--green-deep</b><span>#265f2a · blocos verdes</span></div></div>
+      <div class="swatch"><div class="chip" style="background:#00292b"></div><div class="meta"><b>--bg</b><span>#00292b · fundo principal</span></div></div>
+      <div class="swatch"><div class="chip" style="background:#030806"></div><div class="meta"><b>--bg-deep</b><span>#030806 · seções alternadas</span></div></div>
+      <div class="swatch"><div class="chip" style="background:#051b11"></div><div class="meta"><b>--surface</b><span>#051b11 · cards</span></div></div>
+      <div class="swatch"><div class="chip" style="background:#ffffff"></div><div class="meta"><b>--text</b><span>#ffffff · texto</span></div></div>
+    </div>
+
+    <h2>Tipografia</h2>
+    <p><strong>League Spartan</strong> para títulos e rótulos; <strong>Roboto</strong> para corpo de texto; <strong>Roboto Slab</strong> para código/números.</p>
+    <div class="type-row"><small>H1 · League Spartan 700</small><span style="font-family:var(--font-head);font-weight:700;font-size:2.4rem">Bios Therapy XII</span></div>
+    <div class="type-row"><small>H2 · League Spartan 700</small><span style="font-family:var(--font-head);font-weight:700;font-size:1.7rem">Um Tratamento único que</span></div>
+    <div class="type-row"><small>Eyebrow · 600 · 0.16em</small><span style="font-family:var(--font-head);font-weight:600;letter-spacing:.16em;text-transform:uppercase;font-size:.8rem;color:var(--green)">O equipamento</span></div>
+    <div class="type-row"><small>Corpo · Roboto 400</small><span style="font-family:var(--font-body);font-size:1rem;color:var(--text-dim)">A ação da luz de LED estimula o próprio organismo a sintetizar hormônios e enzimas.</span></div>
+
+    <h2>Espaçamentos</h2>
+    <p>Regra de UI: <strong>todo corpo de texto usa entrelinha de 150%</strong>
+      (<code>line-height: 1.5</code>) para leitura confortável. Títulos ficam mais
+      justos (<code>1.12</code>–<code>1.28</code>). O ritmo vertical entre blocos
+      segue uma escala de 4&nbsp;px.</p>
+
+    <h3 class="ds-sub">Entrelinha (line-height)</h3>
+    <div class="lh-demo">
+      <div class="lh-card">
+        <span class="lh-tag">Corpo · 150% ✓</span>
+        <p style="line-height:1.5">Utilizando a poderosa tecnologia de LED/laser, o Bios Therapy estimula a regeneração celular e reduz inflamações, proporcionando alívio rápido e eficaz de forma natural.</p>
+      </div>
+      <div class="lh-card">
+        <span class="lh-tag lh-tag--bad">Corpo · 115% ✗ (apertado)</span>
+        <p style="line-height:1.15">Utilizando a poderosa tecnologia de LED/laser, o Bios Therapy estimula a regeneração celular e reduz inflamações, proporcionando alívio rápido e eficaz de forma natural.</p>
+      </div>
+    </div>
+    <table class="ds-table">
+      <thead><tr><th>Uso</th><th>line-height</th><th>Onde</th></tr></thead>
+      <tbody>
+        <tr><td>Corpo de texto</td><td><code>1.5</code> (150%)</td><td><code>body</code>, <code>p</code>, listas, FAQ, cards</td></tr>
+        <tr><td>Título de seção (H2/H3)</td><td><code>1.12</code></td><td><code>h1–h4</code></td></tr>
+        <tr><td>Título do hero (H1 longo)</td><td><code>1.28</code></td><td><code>.hero h1</code></td></tr>
+        <tr><td>Rótulos / ícone “+”</td><td><code>1</code></td><td><code>.faq__q::after</code></td></tr>
+      </tbody>
+    </table>
+
+    <h3 class="ds-sub">Escala de espaçamento (base 4&nbsp;px)</h3>
+    <div class="space-scale">
+      <div class="space-row"><span>4</span><i style="width:4px"></i></div>
+      <div class="space-row"><span>8</span><i style="width:8px"></i></div>
+      <div class="space-row"><span>12</span><i style="width:12px"></i></div>
+      <div class="space-row"><span>16</span><i style="width:16px"></i><em>gap padrão de grids (benefícios, pills)</em></div>
+      <div class="space-row"><span>24</span><i style="width:24px"></i><em>gap de colunas / respiro entre blocos</em></div>
+      <div class="space-row"><span>32</span><i style="width:32px"></i><em>padding interno de caixas <code>.framed</code> / <code>.tabs__panel</code></em></div>
+      <div class="space-row"><span>48</span><i style="width:48px"></i></div>
+      <div class="space-row"><span>96</span><i style="width:96px"></i><em>padding vertical de <code>.section</code> (máx.)</em></div>
+    </div>
+    <table class="ds-table">
+      <thead><tr><th>Token / regra</th><th>Valor</th><th>Aplicação</th></tr></thead>
+      <tbody>
+        <tr><td>Padding vertical de seção</td><td><code>clamp(48px, 8vw, 96px)</code></td><td><code>.section</code></td></tr>
+        <tr><td>Seção compacta</td><td><code>clamp(28px, 4vw, 44px)</code></td><td><code>.section--tight</code></td></tr>
+        <tr><td>Padding lateral (gutter)</td><td><code>--pad: clamp(20px, 5vw, 40px)</code></td><td><code>.wrap</code></td></tr>
+        <tr><td>Largura máx. de conteúdo</td><td><code>--maxw: 1180px</code> · hero <code>1000px</code> · texto <code>860px</code></td><td><code>.wrap</code>, <code>.hero__inner</code>, <code>.narrow</code></td></tr>
+        <tr><td>Gap de grid</td><td><code>16px</code> (cards) · <code>clamp(28px, 5vw, 56px)</code> (split)</td><td><code>.benefits</code>, <code>.split</code></td></tr>
+        <tr><td>Raio de borda</td><td><code>--radius: 16px</code> · <code>--radius-sm: 10px</code></td><td>cards, caixas, botões (<code>999px</code>)</td></tr>
+        <tr><td>Espaço abaixo de parágrafo</td><td><code>1em</code></td><td><code>p</code></td></tr>
+      </tbody>
+    </table>
+
+    <h2>Ícones</h2>
+    <p>Conjunto de 13 ícones de linha redesenhados em SVG a partir dos ícones raster do site original. Grid <code>0 0 64 64</code>, <code>stroke-width="3"</code>, pontas arredondadas, cor via <code>currentColor</code>. Arquivos soltos em <code>assets/icons/*.svg</code> e sprite em <code>assets/icons/sprite.svg</code>.</p>
+    <div class="icon-grid">
+      <div class="icon-card"><svg><use href="#ic-epiderme"/></svg><b>epiderme</b><span>Penetra epiderme / derme</span></div>
+      <div class="icon-card"><svg><use href="#ic-ph"/></svg><b>ph</b><span>Controla o pH</span></div>
+      <div class="icon-card"><svg><use href="#ic-drenagem"/></svg><b>drenagem</b><span>Possibilita a drenagem</span></div>
+      <div class="icon-card"><svg><use href="#ic-dor"/></svg><b>dor</b><span>Controla inflamação e dor</span></div>
+      <div class="icon-card"><svg><use href="#ic-circulacao"/></svg><b>circulacao</b><span>Circulação e oxigenação</span></div>
+      <div class="icon-card"><svg><use href="#ic-mitocondria"/></svg><b>mitocondria</b><span>Metabolismo mitocondrial</span></div>
+      <div class="icon-card"><svg><use href="#ic-colageno"/></svg><b>colageno</b><span>Produz colágeno</span></div>
+      <div class="icon-card"><svg><use href="#ic-cicatriza"/></svg><b>cicatriza</b><span>Regenera e cicatriza</span></div>
+      <div class="icon-card"><svg><use href="#ic-reduzirmedidas"/></svg><b>reduzirmedidas</b><span>Reduz medidas</span></div>
+      <div class="icon-card"><svg><use href="#ic-flacidez"/></svg><b>flacidez</b><span>Controla a flacidez</span></div>
+      <div class="icon-card"><svg><use href="#ic-linhas"/></svg><b>linhas</b><span>Linhas de expressão e rugas</span></div>
+      <div class="icon-card"><svg><use href="#ic-pelesuave"/></svg><b>pelesuave</b><span>Suaviza a pele</span></div>
+      <div class="icon-card"><svg><use href="#ic-celulite"/></svg><b>celulite</b><span>Celulite e estrias</span></div>
+    </div>
+
+    <h3 style="font-family:var(--font-head);color:#fff;margin-top:2em">Tamanhos</h3>
+    <div class="demo-row">
+      <svg width="16" height="16"><use href="#ic-cicatriza"/></svg>
+      <svg width="24" height="24"><use href="#ic-cicatriza"/></svg>
+      <svg width="32" height="32"><use href="#ic-cicatriza"/></svg>
+      <svg width="48" height="48"><use href="#ic-cicatriza"/></svg>
+      <svg width="64" height="64"><use href="#ic-cicatriza"/></svg>
+    </div>
+
+    <h3 style="font-family:var(--font-head);color:#fff;margin-top:1.6em">Sobre fundo claro</h3>
+    <div class="on-light">
+      <svg width="40" height="40"><use href="#ic-circulacao"/></svg>
+      <svg width="40" height="40"><use href="#ic-colageno"/></svg>
+      <svg width="40" height="40"><use href="#ic-ph"/></svg>
+      <svg width="40" height="40"><use href="#ic-mitocondria"/></svg>
+    </div>
+
+    <h3 style="font-family:var(--font-head);color:#fff;margin-top:1.6em">Como usar</h3>
+    <pre><code>&lt;!-- 1. Sprite: cole o &lt;svg style="display:none"&gt;…&lt;/svg&gt; uma vez no &lt;body&gt; --&gt;
+&lt;!-- 2. Referencie qualquer ícone: --&gt;
+&lt;svg width="48" height="48" aria-hidden="true"&gt;
+  &lt;use href="#ic-cicatriza"/&gt;
+&lt;/svg&gt;
+
+&lt;!-- Cor: herda de currentColor --&gt;
+.benefit__icon { color: var(--green); }
+
+&lt;!-- Ou use o arquivo solto --&gt;
+&lt;img src="assets/icons/cicatriza.svg" width="48" alt="Regenera e cicatriza"&gt;</code></pre>
+
+    <p style="margin-top:2.4em"><a href="index.html">&larr; voltar para a landing page</a></p>
+  </div>
+</body>
+</html>

@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="bios-icon" role="img" aria-label="Regenera e cicatriza o tecido">
+  <circle cx="27" cy="29" r="17"/>
+  <path d="M17 39 39 19"/>
+  <path d="M19 33l6 6M23 29l6 6M27 25l6 6M31 21l6 6"/>
+  <circle cx="47" cy="45" r="8"/>
+  <path d="M44 42l6 6M50 42l-6 6"/>
+</svg>

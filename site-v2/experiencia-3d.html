@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Experiência — Fotobiomodulação | Bios Therapy (protótipo 2.5D)</title>
+<link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@400;500;600;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --green:#26c484; --green-neon:#1fff8c; --bg:#00120f; --text:#fff;
+    --fh:"League Spartan","Roboto",system-ui,-apple-system,Segoe UI,sans-serif;
+    --fb:"Roboto",system-ui,-apple-system,Segoe UI,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--text);font-family:var(--fb);overflow-x:hidden}
+
+  .viewport{position:fixed;inset:0;z-index:0;background:
+    radial-gradient(130% 90% at 50% 18%, #05302733, transparent 60%),
+    radial-gradient(120% 100% at 50% 100%, #041f1a, #00100d 70%);}
+  #scene,#fx{position:absolute;inset:0;width:100%;height:100%;display:block}
+  #fx{pointer-events:none}
+  .viewport::after{content:"";position:absolute;inset:0;pointer-events:none;
+    background:radial-gradient(115% 80% at 50% 42%, transparent 46%, rgba(0,8,6,.6) 100%);}
+  .grain{position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.05;mix-blend-mode:overlay;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");}
+
+  .scroll-space{position:relative;z-index:2;height:560vh}
+
+  .bar{position:fixed;top:0;left:0;right:0;z-index:6;display:flex;justify-content:space-between;
+    align-items:center;padding:15px 22px;font-family:var(--fh);font-size:.8rem;letter-spacing:.02em;
+    background:linear-gradient(180deg,rgba(0,10,8,.72),transparent)}
+  .bar b{color:var(--green)}
+  .bar .tag{color:rgba(255,255,255,.5);text-transform:uppercase;letter-spacing:.16em;font-size:.64rem}
+  .progress{position:fixed;top:0;left:0;height:2px;background:var(--green-neon);width:0;z-index:7;box-shadow:0 0 12px var(--green-neon)}
+
+  .caption{position:fixed;left:0;right:0;bottom:0;z-index:5;padding:0 22px 40px;pointer-events:none}
+  .step{position:absolute;left:22px;right:22px;bottom:40px;max-width:540px;
+    opacity:0;transform:translateY(18px);transition:opacity .5s ease,transform .5s ease}
+  .step.on{opacity:1;transform:none}
+  .step h2{font-family:var(--fh);font-weight:700;font-size:clamp(1.4rem,4.4vw,2.1rem);line-height:1.12;color:var(--green);margin-bottom:8px}
+  .step p{font-size:.98rem;line-height:1.5;color:rgba(255,255,255,.82)}
+  .step .spec{display:inline-block;margin-top:13px;font-family:var(--fh);font-weight:600;font-size:.74rem;
+    letter-spacing:.12em;text-transform:uppercase;color:var(--green-neon);border:1px solid rgba(31,255,140,.38);padding:6px 13px}
+
+  .hint{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);z-index:5;font-family:var(--fh);
+    font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.45);
+    transition:opacity .4s ease;animation:bob 1.9s ease-in-out infinite}
+  @keyframes bob{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(6px)}}
+
+  .svg-label{font-family:var(--fh);font-weight:600;font-size:15px;letter-spacing:.14em;fill:var(--green-neon)}
+  .svg-sub{font-family:var(--fb);font-size:12px;fill:rgba(255,255,255,.55);letter-spacing:.02em}
+
+  @media (max-width:640px){ .step p{font-size:.9rem} .svg-label{font-size:13px} }
+  @media (prefers-reduced-motion:reduce){ .step{transition:none} }
+</style>
+</head>
+<body>
+
+<div class="progress" id="progress"></div>
+<div class="bar">
+  <span>Dr. <b>Luís Augusto</b> — Bios Therapy</span>
+  <span class="tag">Fotobiomodulação · protótipo 2.5D</span>
+</div>
+
+<div class="viewport" aria-hidden="true">
+  <svg id="scene" viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice">
+    <defs>
+      <linearGradient id="gEpi" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#123f33"/><stop offset="1" stop-color="#0c3128"/>
+      </linearGradient>
+      <linearGradient id="gDerme" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#0d352b"/><stop offset="1" stop-color="#0a2a22"/>
+      </linearGradient>
+      <linearGradient id="gHipo" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#0a2a22"/><stop offset="1" stop-color="#07201a"/>
+      </linearGradient>
+      <radialGradient id="gLed" cx="0.5" cy="0.5" r="0.5">
+        <stop offset="0" stop-color="#ffe2d6"/><stop offset="0.35" stop-color="#ff6a44"/><stop offset="1" stop-color="#b81404"/>
+      </radialGradient>
+      <linearGradient id="gHead" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#fdfefe"/><stop offset="1" stop-color="#cdd8d5"/>
+      </linearGradient>
+      <linearGradient id="gMito" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#1a5c45"/><stop offset="1" stop-color="#0b3327"/>
+      </linearGradient>
+      <filter id="glow" x="-70%" y="-70%" width="240%" height="240%">
+        <feGaussianBlur stdDeviation="7" result="b"/>
+        <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+      </filter>
+      <filter id="soft" x="-50%" y="-50%" width="200%" height="200%">
+        <feGaussianBlur stdDeviation="26"/>
+      </filter>
+    </defs>
+
+    <!-- blobs de fundo (profundidade) -->
+    <g id="depthFar" opacity="0.5">
+      <circle cx="240" cy="300" r="150" fill="#0e3b30" filter="url(#soft)"/>
+      <circle cx="980" cy="620" r="180" fill="#0c342a" filter="url(#soft)"/>
+      <circle cx="620" cy="1150" r="220" fill="#0a2c24" filter="url(#soft)"/>
+    </g>
+
+    <!-- MUNDO (recebe câmera: translate+scale) -->
+    <g id="world">
+      <!-- camadas de pele -->
+      <g id="depthMid">
+        <!-- hipoderme -->
+        <rect x="-200" y="900" width="1600" height="900" fill="url(#gHipo)"/>
+        <g stroke="#0f3a30" stroke-width="2" fill="none" opacity="0.7">
+          <path d="M-40 980 q70 -60 140 0 t140 0 t140 0 t140 0 t140 0 t140 0 t140 0 t140 0 t140 0"/>
+          <path d="M-40 1120 q70 -60 140 0 t140 0 t140 0 t140 0 t140 0 t140 0 t140 0 t140 0 t140 0"/>
+          <path d="M-40 1260 q70 -60 140 0 t140 0 t140 0 t140 0 t140 0 t140 0 t140 0 t140 0 t140 0"/>
+        </g>
+        <!-- derme -->
+        <path d="M-200 300 h1600 v600 h-1600 z" fill="url(#gDerme)"/>
+        <!-- capilares -->
+        <g stroke="#ff6a52" stroke-width="2.4" fill="none" opacity="0.42" stroke-linecap="round">
+          <path d="M60 360 q120 90 40 200 q-80 110 60 220"/>
+          <path d="M1050 340 q-110 100 -30 210 q70 100 -60 230"/>
+          <path d="M420 880 q60 -120 -20 -230 q-70 -100 40 -210"/>
+          <path d="M820 900 q-50 -140 40 -250"/>
+        </g>
+        <!-- fibroblastos -->
+        <g fill="#12463699" stroke="#2b6b57" stroke-width="1.5">
+          <path d="M300 520 l14 -30 8 28 30 6 -26 16 6 30 -24 -18 -26 16 10 -30 -22 -20z"/>
+          <path d="M900 470 l12 -26 7 24 26 5 -22 14 5 26 -21 -16 -22 14 8 -26 -19 -17z"/>
+          <path d="M560 760 l12 -26 7 24 26 5 -22 14 5 26 -21 -16 -22 14 8 -26 -19 -17z"/>
+        </g>
+        <!-- terminação nervosa -->
+        <path d="M180 300 q10 80 -30 130 q-40 50 10 110 q40 50 -20 110 q-30 40 0 90"
+              stroke="#2fe6a7" stroke-width="2" fill="none" opacity="0.35"/>
+
+        <!-- epiderme -->
+        <path d="M-200 210 h1600 v90 h-1600 z" fill="url(#gEpi)"/>
+        <g fill="#2fe6a7" opacity="0.28">
+          <circle cx="120" cy="250" r="3"/><circle cx="260" cy="238" r="2.5"/><circle cx="400" cy="256" r="3"/>
+          <circle cx="560" cy="242" r="2.5"/><circle cx="720" cy="255" r="3"/><circle cx="880" cy="240" r="2.5"/>
+          <circle cx="1020" cy="254" r="3"/><circle cx="1140" cy="244" r="2.5"/>
+        </g>
+
+        <!-- dividers luminosos -->
+        <line x1="-200" y1="210" x2="1400" y2="210" stroke="#7CFFCB" stroke-width="2" opacity="0.85" filter="url(#glow)"/>
+        <line x1="-200" y1="300" x2="1400" y2="300" stroke="#26c484" stroke-width="1.5" opacity="0.5"/>
+        <line x1="-200" y1="900" x2="1400" y2="900" stroke="#26c484" stroke-width="1.5" opacity="0.5"/>
+
+        <!-- célula-alvo (derme) -->
+        <g id="cell" transform="translate(600 640)">
+          <path d="M0 -78 c46 -6 84 26 82 70 c-2 44 26 66 8 96 c-18 30 -66 30 -96 20
+                   c-30 -10 -70 4 -92 -26 c-22 -30 -6 -66 -2 -96 c4 -30 -18 -58 12 -76 c30 -18 42 -2 80 -12z"
+                fill="#0e3b2e" fill-opacity="0.55" stroke="#3fe9ad" stroke-width="2"/>
+          <circle cx="-16" cy="14" r="24" fill="#12503c" fill-opacity="0.75" stroke="#2b7f63" stroke-width="1.5"/>
+          <g id="mito" opacity="0" transform="translate(18 -6)">
+            <ellipse rx="36" ry="19" fill="url(#gMito)" stroke="#26c484" stroke-width="2"/>
+            <g stroke="#26c484" stroke-width="1.6" fill="none" opacity="0.85">
+              <path d="M-24 -4 q9 13 18 0 q9 -13 18 0"/>
+              <path d="M-24 6 q9 13 18 0 q9 -13 16 0"/>
+            </g>
+            <ellipse id="mitoGlow" rx="36" ry="19" fill="none" stroke="#1fff8c" stroke-width="3" opacity="0" filter="url(#glow)"/>
+          </g>
+        </g>
+      </g>
+
+      <!-- emissor Bios (perto) -->
+      <g id="emitter">
+        <rect x="576" y="-120" width="48" height="170" rx="16" fill="url(#gHead)"/>
+        <path d="M534 40 h132 a12 12 0 0 1 12 13 l-16 74 a20 20 0 0 1 -20 16 h-96 a20 20 0 0 1 -20 -16 l-16 -74 a12 12 0 0 1 12 -13z" fill="url(#gHead)"/>
+        <ellipse cx="600" cy="150" rx="58" ry="14" fill="none" stroke="#ff2a2a" stroke-width="6" filter="url(#glow)"/>
+        <ellipse cx="600" cy="150" rx="50" ry="10" fill="url(#gLed)"/>
+      </g>
+    </g>
+
+    <!-- rótulos anatômicos (câmera só translada, não dá zoom) -->
+    <g id="labels">
+      <g data-y="255">
+        <line class="ll" x1="1000" y1="255" x2="1090" y2="255" stroke="#1fff8c" stroke-width="1.5"/>
+        <text class="svg-label" x="1000" y="240" text-anchor="end">EPIDERME</text>
+        <text class="svg-sub" x="1000" y="274" text-anchor="end">barreira externa</text>
+      </g>
+      <g data-y="560">
+        <line class="ll" x1="1000" y1="560" x2="1090" y2="560" stroke="#1fff8c" stroke-width="1.5"/>
+        <text class="svg-label" x="1000" y="545" text-anchor="end">DERME</text>
+        <text class="svg-sub" x="1000" y="579" text-anchor="end">vasos · fibroblastos · nervos</text>
+      </g>
+      <g data-y="1040">
+        <line class="ll" x1="1000" y1="1040" x2="1090" y2="1040" stroke="#1fff8c" stroke-width="1.5"/>
+        <text class="svg-label" x="1000" y="1025" text-anchor="end">HIPODERME</text>
+        <text class="svg-sub" x="1000" y="1059" text-anchor="end">tecido subcutâneo</text>
+      </g>
+    </g>
+  </svg>
+
+  <canvas id="fx"></canvas>
+</div>
+
+<div class="caption">
+  <div class="step" data-range="0,0.12">
+    <h2>A luz que trabalha por dentro</h2>
+    <p>O Bios Therapy emite luz de LED vermelha calibrada para atravessar a pele — sem calor nocivo, sem agulha, sem corte.</p>
+    <span class="spec">Fotobiomodulação</span>
+  </div>
+  <div class="step" data-range="0.12,0.34">
+    <h2>Atravessa a epiderme</h2>
+    <p>No comprimento de onda certo, a luz passa pela camada externa em vez de ser refletida na superfície.</p>
+    <span class="spec">630 nm · faixa 600–780 nm</span>
+  </div>
+  <div class="step" data-range="0.34,0.56">
+    <h2>Alcança a derme</h2>
+    <p>Na profundidade da dor e da inflamação: vasos sanguíneos, fibroblastos e terminações nervosas.</p>
+    <span class="spec">Potência 1–999 mW</span>
+  </div>
+  <div class="step" data-range="0.56,0.78">
+    <h2>É absorvida pela célula</h2>
+    <p>A energia luminosa entra pela membrana e é conduzida até o centro de produção de energia da célula.</p>
+    <span class="spec">Alvo: mitocôndria</span>
+  </div>
+  <div class="step" data-range="0.78,1.01">
+    <h2>Ativa a mitocôndria</h2>
+    <p>A mitocôndria aumenta a produção de ATP — mais energia para regenerar tecido, reduzir inflamação e acelerar a recuperação.</p>
+    <span class="spec">↑ ATP · ↑ reparo celular</span>
+  </div>
+</div>
+
+<div class="hint" id="hint">role para descer ▾</div>
+<div class="grain"></div>
+<div class="scroll-space"></div>
+
+<script>
+(function(){
+  "use strict";
+  var clamp=function(v,a,b){return Math.max(a,Math.min(b,v));};
+  var lerp=function(a,b,t){return a+(b-a)*t;};
+  var smooth=function(e0,e1,x){var t=clamp((x-e0)/(e1-e0),0,1);return t*t*(3-2*t);};
+  var easeIO=function(t){return t<0.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;};
+
+  var svg=document.getElementById("scene");
+  var world=document.getElementById("world");
+  var labels=document.getElementById("labels");
+  var mito=document.getElementById("mito");
+  var mitoGlow=document.getElementById("mitoGlow");
+  var depthMid=document.getElementById("depthMid");
+  var depthFar=document.getElementById("depthFar");
+  var canvas=document.getElementById("fx");
+  var ctx=canvas.getContext("2d");
+  var hint=document.getElementById("hint");
+  var bar=document.getElementById("progress");
+
+  var VB={w:1200,h:800};
+  var FOCUS0=250, CELL_Y=640, NOZZLE_Y=150;
+  var reduce=matchMedia("(prefers-reduced-motion:reduce)").matches;
+
+  /* câmera: screenY = 400 + (worldY-focus)*zoom ; screenX = 600 + (worldX-600)*zoom  (em coords de viewBox) */
+  var cam={focus:FOCUS0, zoom:1};
+  function camApply(){
+    world.setAttribute("transform",
+      "translate(600 400) scale("+cam.zoom.toFixed(4)+") translate(-600 "+(-cam.focus).toFixed(2)+")");
+    labels.setAttribute("transform","translate(0 "+(400-cam.focus).toFixed(2)+")");
+  }
+  // viewBox -> pixels do canvas
+  var scaleVB=1, offX=0, offY=0;
+  function fit(){
+    var r=svg.getBoundingClientRect();
+    canvas.width=r.width*devicePixelRatio; canvas.height=r.height*devicePixelRatio;
+    ctx.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0);
+    // preserveAspectRatio="slice": escala = max
+    scaleVB=Math.max(r.width/VB.w, r.height/VB.h);
+    offX=(r.width-VB.w*scaleVB)/2; offY=(r.height-VB.h*scaleVB)/2;
+  }
+  function toPx(wx,wy){ // world -> screen px
+    var sx=600+(wx-600)*cam.zoom, sy=400+(wy-cam.focus)*cam.zoom;
+    return [offX+sx*scaleVB, offY+sy*scaleVB];
+  }
+  window.addEventListener("resize",fit); fit();
+
+  /* partículas */
+  var photons=[], atp=[];
+  for(var i=0;i<150;i++) photons.push({o:Math.random()*2-1, y:Math.random(), s:0.35+Math.random()*0.9});
+  for(var j=0;j<220;j++) atp.push({a:Math.random()*Math.PI*2, d:Math.random(), s:0.4+Math.random()*0.9, r:1+Math.random()*2.4});
+
+  /* progresso / legendas */
+  var steps=[].slice.call(document.querySelectorAll(".step")).map(function(el){
+    var r=el.getAttribute("data-range").split(",");
+    return {el:el,a:parseFloat(r[0]),b:parseFloat(r[1])};
+  });
+  var lblG=[].slice.call(labels.querySelectorAll("g"));
+  var target=0;
+  function onScroll(){
+    var space=document.querySelector(".scroll-space").offsetHeight-innerHeight;
+    target=clamp(scrollY/Math.max(space,1),0,1);
+    bar.style.width=(target*100).toFixed(2)+"%";
+    steps.forEach(function(s){s.el.classList.toggle("on",target>=s.a&&target<s.b);});
+    if(hint) hint.style.opacity=target>0.04?0:1;
+  }
+  addEventListener("scroll",onScroll,{passive:true}); addEventListener("resize",onScroll); onScroll();
+
+  var p=0, t0=performance.now(), run=true;
+  document.addEventListener("visibilitychange",function(){run=!document.hidden;if(run){t0=performance.now();frame();}});
+
+  function frame(){
+    if(!run) return;
+    requestAnimationFrame(frame);
+    var now=performance.now(), tt=(now-t0)/1000;
+    p += (target-p)*(reduce?1:0.085);
+    var e=easeIO(clamp(smooth(0,0.8,p),0,1));
+
+    // câmera
+    cam.focus = lerp(FOCUS0, CELL_Y, e);
+    cam.zoom  = 1 + smooth(0.72,1,p)*6.2;
+    camApply();
+
+    // parallax (some ao dar zoom)
+    var par=1-smooth(0.66,0.8,p);
+    var d=(cam.focus-FOCUS0);
+    depthMid.setAttribute("transform","translate(0 "+(d*0.06*par).toFixed(2)+")");
+    depthFar.setAttribute("transform","translate(0 "+(-d*0.5*par).toFixed(2)+")");
+
+    // rótulos anatômicos: aparecem cedo, somem antes do micro
+    var lblOp=(1-smooth(0.5,0.64,p))*smooth(0.04,0.12,p);
+    lblG.forEach(function(g){ g.setAttribute("opacity",lblOp.toFixed(3)); });
+
+    // mitocôndria
+    mito.setAttribute("opacity", smooth(0.5,0.78,p).toFixed(3));
+    var act=smooth(0.8,0.98,p);
+    mitoGlow.setAttribute("opacity", (act*(0.55+Math.sin(tt*5)*0.25)).toFixed(3));
+    mito.setAttribute("transform","translate(18 -6) scale("+(1+Math.sin(tt*4)*0.03*act).toFixed(3)+")");
+
+    // ---- canvas FX ----
+    var r=svg.getBoundingClientRect();
+    ctx.clearRect(0,0,r.width,r.height);
+    ctx.globalCompositeOperation="lighter";
+
+    var beamK=clamp(smooth(0.02,0.16,p)-smooth(0.52,0.74,p),0,1);
+    if(beamK>0.01){
+      var nz=toPx(600,NOZZLE_Y), bx=nz[0], by=nz[1];
+      var len=520*scaleVB*cam.zoom, wTop=10*scaleVB*cam.zoom, wBot=64*scaleVB*cam.zoom;
+      var grd=ctx.createLinearGradient(0,by,0,by+len);
+      grd.addColorStop(0,"rgba(255,70,45,"+(0.5*beamK)+")");
+      grd.addColorStop(1,"rgba(255,60,40,0)");
+      ctx.fillStyle=grd;
+      ctx.beginPath();
+      ctx.moveTo(bx-wTop,by); ctx.lineTo(bx+wTop,by);
+      ctx.lineTo(bx+wBot,by+len); ctx.lineTo(bx-wBot,by+len); ctx.closePath(); ctx.fill();
+      // núcleo brilhante
+      var gc=ctx.createLinearGradient(0,by,0,by+len);
+      gc.addColorStop(0,"rgba(255,210,190,"+(0.6*beamK)+")");
+      gc.addColorStop(1,"rgba(255,120,90,0)");
+      ctx.fillStyle=gc;
+      ctx.beginPath();
+      ctx.moveTo(bx-wTop*0.4,by); ctx.lineTo(bx+wTop*0.4,by);
+      ctx.lineTo(bx+wBot*0.32,by+len); ctx.lineTo(bx-wBot*0.32,by+len); ctx.closePath(); ctx.fill();
+      // fótons
+      ctx.fillStyle="rgba(255,180,150,"+(0.9*beamK)+")";
+      for(var k=0;k<photons.length;k++){
+        var ph=photons[k];
+        ph.y+=ph.s*0.004*(reduce?0:1); if(ph.y>1) ph.y-=1;
+        var yy=by+ph.y*len, ww=lerp(wTop,wBot,ph.y);
+        ctx.beginPath(); ctx.arc(bx+ph.o*ww*0.8, yy, 1.6*scaleVB, 0, 6.283); ctx.fill();
+      }
+    }
+
+    if(act>0.01){
+      var cc=toPx(618,CELL_Y-6), cx=cc[0], cy=cc[1];
+      for(var m=0;m<atp.length;m++){
+        var a=atp[m];
+        a.d+=a.s*0.006*(reduce?0:1); if(a.d>1) a.d-=1;
+        var rad=(20+a.d*160)*scaleVB, al=(1-a.d)*act;
+        ctx.fillStyle="rgba(150,255,216,"+(al*0.9)+")";
+        ctx.beginPath();
+        ctx.arc(cx+Math.cos(a.a)*rad, cy+Math.sin(a.a)*rad*0.9, a.r*scaleVB, 0, 6.283);
+        ctx.fill();
+      }
+      // halo
+      var hg=ctx.createRadialGradient(cx,cy,0,cx,cy,180*scaleVB);
+      hg.addColorStop(0,"rgba(31,255,140,"+(0.28*act)+")");
+      hg.addColorStop(1,"rgba(31,255,140,0)");
+      ctx.fillStyle=hg;
+      ctx.beginPath(); ctx.arc(cx,cy,180*scaleVB,0,6.283); ctx.fill();
+    }
+    ctx.globalCompositeOperation="source-over";
+  }
+  frame();
+})();
+</script>
+</body>
+</html>

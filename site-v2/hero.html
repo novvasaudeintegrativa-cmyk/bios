@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Bios Therapy — A luz que regenera por dentro</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --ink:#F4EEEC; --dim:rgba(244,238,236,.5); --red:#ff2a17;
+    --f:"Space Grotesk",system-ui,-apple-system,Segoe UI,sans-serif;
+    --ease:cubic-bezier(.16,1,.3,1); --mx:clamp(20px,4.4vw,64px);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{height:100%}
+  body{background:#021410;color:var(--ink);font-family:var(--f);
+    -webkit-font-smoothing:antialiased;overflow:hidden}
+  a{color:inherit;text-decoration:none}
+  ::selection{background:var(--red);color:#fff}
+
+  /* gradiente verde bem escuro, um pouco mais claro na altura da logo (topo-esq.) */
+  .amb{position:fixed;inset:0;z-index:0;pointer-events:none;
+    background:
+      radial-gradient(52vw 42vw at 10% 4%, rgba(22,94,72,.5), rgba(12,58,44,.16) 46%, transparent 66%),
+      radial-gradient(90vw 80vw at 78% 104%, rgba(2,16,12,.72), transparent 64%),
+      linear-gradient(158deg, #062319 0%, #041a13 44%, #020e09 100%);}
+  .amb::after{content:"";position:absolute;inset:0;
+    background:radial-gradient(120% 84% at 52% 44%, transparent 38%, rgba(0,5,3,.76) 100%)}
+
+  /* LUZ DIRECIONAL — nasce do meio da cabeça (--gx,--gy px) e projeta pra frente.
+     .glow  = fonte quente cravada na cabeça
+     .beam  = feixe/cone que aponta pro cursor; cresce com a distância */
+  .glow{position:fixed;z-index:1;pointer-events:none;border-radius:50%;
+    left:var(--gx,34vw);top:var(--gy,50vh);width:var(--gr,200px);height:var(--gr,200px);
+    transform:translate(-50%,-50%);filter:blur(12px);opacity:.9;
+    background:radial-gradient(closest-side,
+      #ffc9b8 0%, #ff4626 16%, #ec1f0b 36%, #bd1104 58%, rgba(140,8,4,0) 80%);
+    animation:pulse 3s var(--ease) infinite}
+  /* wrapper carrega o blur -> as arestas do clip-path ficam suaves */
+  .beamwrap{position:fixed;inset:0;z-index:1;pointer-events:none;filter:blur(56px);will-change:filter}
+  .beam{position:absolute;left:var(--gx,34vw);top:var(--gy,50vh);
+    width:var(--bl,460px);height:var(--bw,300px);opacity:var(--bo,.9);
+    transform:translateY(-50%) rotate(var(--bang,0deg));transform-origin:0 50%;
+    background:linear-gradient(90deg,
+      rgba(255,82,52,.95) 0%, rgba(240,34,18,.72) 24%, rgba(222,20,9,.54) 52%, rgba(208,15,7,.4) 80%, rgba(198,12,6,.22) 100%);
+    clip-path:polygon(0 44%, 100% 2%, 100% 98%, 0 56%)}
+  .beam::after{content:"";position:absolute;left:0;top:calc(50% - 3px);height:6px;width:100%;filter:blur(5px);
+    background:linear-gradient(90deg, rgba(255,190,162,.9), rgba(255,96,64,.45) 45%, rgba(255,80,52,.25))}
+  /* onde a luz "chega" — pool no cursor; quanto mais longe, maior e mais forte */
+  .spot{position:fixed;z-index:1;pointer-events:none;border-radius:50%;left:var(--sx,60vw);top:var(--sy,50vh);
+    width:var(--sw,160px);height:var(--sw,160px);transform:translate(-50%,-50%);filter:blur(30px);
+    opacity:var(--so,.55);
+    background:radial-gradient(closest-side,
+      rgba(255,214,198,.95) 0%, rgba(255,74,44,.85) 20%, rgba(228,22,10,.42) 48%, rgba(200,12,6,.12) 72%, transparent 84%);
+    animation:pulse 3.2s var(--ease) infinite}
+  @keyframes pulse{0%,100%{transform:translate(-50%,-50%) scale(1)}50%{transform:translate(-50%,-50%) scale(1.05)}}
+
+  .grain{position:fixed;inset:-40%;z-index:2;pointer-events:none;opacity:.035;mix-blend-mode:overlay;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>")}
+
+  header{position:fixed;top:0;left:0;right:0;z-index:20;display:flex;justify-content:space-between;
+    align-items:center;padding:20px var(--mx);font-size:.82rem}
+  header .logo{display:block}
+  header .logo img{height:34px;width:auto;display:block}
+  header .r{font-size:.64rem;letter-spacing:.24em;text-transform:uppercase;color:var(--dim)}
+
+  .wrap{position:relative;z-index:10;height:100vh;display:flex;align-items:center;padding:0 var(--mx)}
+
+  .device{position:absolute;left:6vw;top:50%;width:min(30vw,380px);z-index:6;pointer-events:none;
+    will-change:transform;transform-origin:50% 50%;filter:drop-shadow(0 26px 60px rgba(0,0,0,.55))}
+  .device>img{width:100%;display:block;position:relative;z-index:2}
+  .led{position:absolute;pointer-events:none;mix-blend-mode:screen;border-radius:50%}
+  .led--face{left:66%;top:5%;width:30%;height:56%;z-index:3;filter:blur(4px);transform:rotate(-5deg);
+    background:radial-gradient(closest-side, rgba(255,232,220,.9), rgba(255,60,32,.8) 42%, rgba(255,24,10,.28) 74%, transparent 92%);
+    animation:flicker 2.6s steps(1,end) infinite}
+  .led--core{left:76%;top:24%;width:13%;height:20%;z-index:4;filter:blur(2px);
+    background:radial-gradient(closest-side, rgba(255,244,238,1), rgba(255,130,90,.65) 52%, transparent 84%);
+    animation:breathe 2.2s var(--ease) infinite}
+  @keyframes breathe{0%,100%{opacity:.85;transform:scale(1)}50%{opacity:1;transform:scale(1.05)}}
+  @keyframes flicker{0%,100%{opacity:.95}12%{opacity:1}24%{opacity:.92}37%{opacity:1}55%{opacity:.9}70%{opacity:1}83%{opacity:.94}}
+
+  .lede{position:relative;z-index:12;margin-left:auto;max-width:min(50vw,640px)}
+  .kick{font-size:.7rem;letter-spacing:.26em;text-transform:uppercase;color:var(--dim);
+    margin-bottom:clamp(16px,2.2vw,24px);overflow:hidden}
+  .kick i{display:inline-block;font-style:normal}
+  h1{font-weight:500;letter-spacing:-.04em;line-height:.95;font-size:clamp(2.7rem,7.6vw,6.6rem)}
+  h1 .row{display:block;overflow:hidden}
+  h1 .w{display:inline-block;will-change:transform}
+  h1 em{font-style:normal;color:var(--red)}
+  .sub{margin-top:clamp(18px,2.4vw,32px);max-width:38ch;font-size:clamp(.95rem,1.1vw,1.05rem);
+    line-height:1.6;color:var(--dim);font-weight:300;overflow:hidden}
+  .sub i{display:block;font-style:normal}
+
+  .cta{margin-top:clamp(24px,3vw,40px);display:inline-block;font-size:.78rem;letter-spacing:.14em;
+    text-transform:uppercase;position:relative;padding-bottom:7px}
+  .cta::after{content:"";position:absolute;left:0;bottom:0;height:1px;width:100%;background:var(--ink);
+    transform:scaleX(0);transform-origin:0 50%;transition:transform .5s var(--ease)}
+  .cta:hover::after{transform:scaleX(1)}
+  .cta span{display:inline-block;transition:transform .4s var(--ease)}
+  .cta:hover span{transform:translateX(4px)}
+
+  .scrollcue{position:fixed;left:var(--mx);bottom:26px;z-index:20;font-size:.62rem;letter-spacing:.28em;
+    text-transform:uppercase;color:var(--dim);display:flex;align-items:center;gap:10px}
+  .scrollcue i{width:24px;height:1px;background:rgba(244,238,236,.22);display:block;position:relative;overflow:hidden}
+  .scrollcue i::after{content:"";position:absolute;inset:0;background:var(--red);transform:translateX(-100%);
+    animation:sweep 2.1s var(--ease) infinite}
+  @keyframes sweep{0%{transform:translateX(-100%)}60%,100%{transform:translateX(100%)}}
+
+  .cur{position:fixed;top:0;left:0;width:8px;height:8px;border:1px solid var(--ink);border-radius:50%;
+    z-index:40;pointer-events:none;transform:translate(-50%,-50%);
+    transition:width .35s var(--ease),height .35s var(--ease),border-color .35s var(--ease)}
+  .cur.on{width:42px;height:42px;border-color:var(--red)}
+
+  @media (max-width:900px){
+    body{overflow-y:auto}
+    .cur{display:none}
+    .wrap{height:auto;min-height:100vh;flex-direction:column;justify-content:center;padding-top:20vh;padding-bottom:12vh}
+    .lede{max-width:none;margin:0}
+    .device{position:relative;left:auto;top:auto;width:76vw;margin:0 auto 5vh}
+    h1{font-size:clamp(2.5rem,12vw,4rem)}
+  }
+  @media (prefers-reduced-motion:reduce){ .scrollcue i::after,.led,.glow,.glow--soft{animation:none!important} }
+</style>
+</head>
+<body>
+
+<div class="amb"></div>
+<div class="beamwrap"><div class="beam" id="beam"></div></div>
+<div class="spot" id="spot"></div>
+<div class="glow" id="glow"></div>
+<div class="grain"></div>
+
+<header>
+  <a class="logo" href="#" aria-label="Bios Fototerapia"><img src="assets/logo-bios.png" alt="Bios Fototerapia" /></a>
+  <span class="r">Fotobiomodulação · 630 nm</span>
+</header>
+
+<div class="wrap">
+  <div class="device" id="device">
+    <img src="assets/aparelho/side-right.png" alt="Aparelho Bios Therapy" />
+    <span class="led led--face"></span>
+    <span class="led led--core"></span>
+  </div>
+  <div class="lede">
+    <p class="kick"><i>A tecnologia por dentro do corpo</i></p>
+    <h1 id="h1">
+      <span class="row"><span class="w">A</span>&nbsp;<span class="w">luz</span>&nbsp;<span class="w">que</span></span>
+      <span class="row"><span class="w"><em>regenera</em></span></span>
+      <span class="row"><span class="w">por</span>&nbsp;<span class="w">dentro.</span></span>
+    </h1>
+    <p class="sub"><i>Alívio de dores crônicas e recuperação acelerada — na profundidade da célula, onde a mitocôndria transforma luz em energia.</i></p>
+    <a class="cta" href="#" data-cur><span>Conheça o Bios Therapy &nbsp;↓</span></a>
+  </div>
+</div>
+
+<div class="scrollcue">Role <i></i></div>
+<div class="cur" id="cur"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script>
+(function(){
+  "use strict";
+  var reduce=matchMedia("(prefers-reduced-motion:reduce)").matches;
+  var lerp=function(a,b,t){return a+(b-a)*t;};
+  var clamp=function(v,a,b){return Math.max(a,Math.min(b,v));};
+  var desk=innerWidth>900;
+
+  var device=document.getElementById("device");
+  var cur=document.getElementById("cur");
+  var h1=document.getElementById("h1");
+  var glow=document.getElementById("glow");
+  var beam=document.getElementById("beam");
+  var spot=document.getElementById("spot");
+
+  var target={x:.02,y:0}, m={x:.02,y:0}, prev={x:.02,y:0};
+  var cursT={x:innerWidth*.6,y:innerHeight*.55}, curs={x:cursT.x,y:cursT.y};
+  addEventListener("pointermove",function(e){
+    target.x=e.clientX/innerWidth-.5; target.y=e.clientY/innerHeight-.5;
+    cursT.x=e.clientX; cursT.y=e.clientY;
+  });
+
+  var gr=260, grT=260, aim=0, rotPrev=0, t0=performance.now();
+  (function frame(){
+    requestAnimationFrame(frame);
+    var t=(performance.now()-t0)/1000;
+
+    m.x=lerp(m.x,target.x,reduce?1:0.06); m.y=lerp(m.y,target.y,reduce?1:0.06);
+    var vx=m.x-prev.x; prev.x=m.x; prev.y=m.y;
+    curs.x=lerp(curs.x,cursT.x,.16); curs.y=lerp(curs.y,cursT.y,.16);
+    cur.style.transform="translate("+curs.x+"px,"+curs.y+"px) translate(-50%,-50%)";
+
+    var dx=0, dy=0, w=Math.min(innerWidth*0.30,380), hh=w*1.0288;   // side-right.png 798x821
+    var hx=innerWidth*0.34, hy=innerHeight*0.5;
+    if(desk){
+      dx=m.x*150 + Math.sin(t*0.6)*7;
+      dy=m.y*104 + Math.sin(t*0.9)*10;
+      var rr=rotPrev*Math.PI/180;
+      hx=innerWidth*0.06 + dx + 0.5*w + 0.32*w*Math.cos(rr);   // cabeça de LED ≈ 82% x
+      hy=innerHeight*0.5 - hh/2 + dy + 0.34*hh + 0.32*w*Math.sin(rr);  //           34% y
+    }
+
+    var dist=Math.hypot(curs.x-hx, curs.y-hy);
+    var d01=clamp((dist-70)/(innerWidth*0.5),0,1);
+    var ang=Math.atan2(curs.y-hy, curs.x-hx);
+    var angDeg=clamp(ang*180/Math.PI,-45,45);          // aponta até 45° pra cima/baixo
+    aim=lerp(aim, angDeg, reduce?1:0.06);
+
+    if(desk){
+      var rot=clamp(aim*0.95,-45,45) + Math.sin(t*0.5)*0.6;
+      rotPrev=rot;
+      device.style.transform="translate(0,-50%) translate("+dx.toFixed(1)+"px,"+dy.toFixed(1)+"px) rotate("+rot.toFixed(2)+"deg)";
+      h1.style.transform="translate("+(m.x*-12).toFixed(1)+"px,"+(m.y*-8).toFixed(1)+"px)";
+    }
+
+    // fonte quente cravada na cabeça
+    grT=lerp(180,250,d01);
+    gr=lerp(gr,grT,.1);
+
+    var bl=clamp(dist*1.14, 340, innerWidth*0.98);
+    var bw=lerp(280, Math.min(innerWidth*0.56,880), d01);
+    beam.style.setProperty("--bang",angDeg.toFixed(1)+"deg");
+    beam.style.setProperty("--bl",bl.toFixed(0)+"px");
+    beam.style.setProperty("--bw",bw.toFixed(0)+"px");
+    beam.style.setProperty("--bo",lerp(0.85,1,d01).toFixed(2));
+
+    // pool de luz onde o cursor está — quanto mais longe, maior e mais forte
+    spot.style.setProperty("--sx",curs.x.toFixed(0)+"px");
+    spot.style.setProperty("--sy",curs.y.toFixed(0)+"px");
+    spot.style.setProperty("--sw",lerp(150, Math.min(innerWidth*0.5,760), d01).toFixed(0)+"px");
+    spot.style.setProperty("--so",lerp(0.35,1,d01).toFixed(2));
+
+    var gxs=hx.toFixed(0)+"px", gys=hy.toFixed(0)+"px";
+    glow.style.setProperty("--gx",gxs); glow.style.setProperty("--gy",gys); glow.style.setProperty("--gr",gr.toFixed(0)+"px");
+    beam.style.setProperty("--gx",gxs); beam.style.setProperty("--gy",gys);
+  })();
+
+  document.querySelectorAll("a,[data-cur]").forEach(function(el){
+    el.addEventListener("pointerenter",function(){cur.classList.add("on");});
+    el.addEventListener("pointerleave",function(){cur.classList.remove("on");});
+  });
+
+  function go(){
+    var W=document.querySelectorAll("h1 .w"),K=document.querySelector(".kick i"),S=document.querySelector(".sub i");
+    if(!window.gsap||reduce){ return; }
+    gsap.set(W,{yPercent:112}); gsap.set(K,{yPercent:120}); gsap.set(S,{yPercent:110});
+    gsap.set([".cta",".scrollcue","header",cur,device,glow,beam],{autoAlpha:0});
+    var tl=gsap.timeline({delay:.1});
+    tl.to([glow,beam],{autoAlpha:1,duration:1.4,ease:"power2.out"},0)
+      .to(device,{autoAlpha:1,duration:1.3,ease:"power2.out"},.15)
+      .to("header",{autoAlpha:1,duration:.6},.3)
+      .to(K,{yPercent:0,duration:.9,ease:"expo.out"},.5)
+      .to(W,{yPercent:0,duration:1.15,stagger:.075,ease:"expo.out"},.6)
+      .to(S,{yPercent:0,duration:1,ease:"expo.out"},"-=.7")
+      .to(".cta",{autoAlpha:1,duration:.7},"-=.5")
+      .to([".scrollcue",cur],{autoAlpha:1,duration:.6,stagger:.1},"-=.4");
+  }
+  if(document.readyState==="complete")go(); else addEventListener("load",go);
+})();
+</script>
+</body>
+</html>

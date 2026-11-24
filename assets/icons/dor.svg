@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="bios-icon" role="img" aria-label="Controla inflamacao e dor">
+  <path d="M15 44a15 15 0 1 1 26 0"/>
+  <path d="M14 46h28"/>
+  <path d="M20 28l7 3M35 28l-7 3"/>
+  <circle cx="23" cy="36" r="1.6" fill="currentColor" stroke="none"/>
+  <circle cx="33" cy="36" r="1.6" fill="currentColor" stroke="none"/>
+  <path d="M24 42q4 3 8 0"/>
+  <path d="M8 22l6 3-3 4 6 3"/>
+  <path d="M50 20l-6 3 3 4-6 3"/>
+</svg>
