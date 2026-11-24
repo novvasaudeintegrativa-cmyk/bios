@@ -367,6 +367,17 @@ main > section + section::before {
 }
 .contact .btn:hover { background: #5dffae; }
 
+/* ícone e botão pulsando */
+.contact__img img { animation: pulse-icon 1.8s ease-in-out infinite; }
+.contact .btn { animation: pulse-btn 1.8s ease-in-out infinite; }
+.contact .btn:hover { animation-play-state: paused; }
+@keyframes pulse-icon { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.08); } }
+@keyframes pulse-btn {
+  0%, 100% { transform: scale(1);    box-shadow: 0 0 0 0 rgba(31, 255, 140, .55); }
+  50%      { transform: scale(1.05); box-shadow: 0 0 0 14px rgba(31, 255, 140, 0); }
+}
+@media (prefers-reduced-motion: reduce) { .contact__img img, .contact .btn { animation: none; } }
+
 /* ---- Footer -------------------------------------- */
 .site-footer {
   background: var(--bg); text-align: center; padding: 34px 20px;
